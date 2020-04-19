@@ -33,6 +33,7 @@ int FB(int i, int W, int k)
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
 // Imprime por clog la información de ejecución de los algoritmos.
 // Imprime por cout el resultado de algun algoritmo ejecutado.
+//---------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
 	// Leemos el parametro que indica el algoritmo a ejecutar.
@@ -82,3 +83,4 @@ int main(int argc, char** argv)
     cout << (res >= 0 ? res : -1) << endl;
     return 0;
 }
+//---------------------------------------------------------------------------------
