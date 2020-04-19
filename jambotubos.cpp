@@ -55,22 +55,19 @@ int FB(){
 // Estimo que la complejidad es O(2^n) por FBAux + O(2^n) por el maximo.
 // Me imagino que se puede hacer FBAux de forma divide and conquer, y ahi podriamos justificar la complejidad con el teorema maestro. Deberiamos modificar el algoritmo como para que arme las secuencias y subsecuencias. El paso recursivo seria separado en 2 probl. de n/2 tamano. Una vez que volvamos del paso recursivo, usamos un merge para unir las secuencias de los dos lados. Eso tendria una complejidad. Despues buscariamos la secuencia con mejor k, lo que seria O(2^n * n) (2^n casos de n largo).
 //---------------------------------------------------------------------------------
-/*
-// No elimine tu FB por las dudas
-int FB(int i, int W, int k)
+
+
+// Ajuste sobre el algoritmo anterior
+int FB(int i, int W, int k, int minR, bool aplastados)
 {
-    // Caso base.
-	// if (verificaResistencias(arregloDeEstePaso)){
-		return k;
-	} else {
-		return 0;
-	}
-    if (i == n) return W <= R ? k : 0;
+    // Caso base.    
+    if (i == n) return (W <= R && !aplastados) ? k : 0;
 
     // Recursión.
-    return max(FB(i+1, W, k), FB(i+1, W+w[i], k+1));
+    bool aplastadosAux = aplastados || (minR - w[i] < 0);
+    return max(FB(i+1, W, k, minR, aplastados), FB(i+1, W+w[i], k+1, min(minR - w[i], r[i]), aplastadosAux));
 }
-*/
+
 //---------------------------------------------------------------------------------
 bool poda_factibilidad = true;
 bool poda_optimalidad = true;
@@ -141,7 +138,7 @@ int main(int argc, char** argv)
     
     switch (algoritmo) {
         case "FB": 
-            res = FB(0, 0, 0);
+            res = FB(0, 0, 0, R, false);
             break;
         default:
             break;
