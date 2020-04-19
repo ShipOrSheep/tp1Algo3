@@ -32,6 +32,7 @@ void FBAux(int i, int k, int Ractual, vector<int> *res){
 	if(i == n){return;} // Llegue al fondo del arbol de recursion. Ya puse 0 o k en el vector.
 	int Rproxima = min(Ractual - w[i], r[i]);
     res.push_back( max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res)) )
+	return;
 }
 //---------------------------------------------------------------------------------
 int maximo(vector<int> vec){
@@ -45,12 +46,15 @@ int maximo(vector<int> vec){
 }
 //---------------------------------------------------------------------------------
 // Este esria el nuevo FB
-int FB(int i, int W, int k){
-	vector<int> res;
+int FB(){
+	vector<int> res; // no nos preocupamos por usar memoria dinamica, <vector> ya la usa
 	FBAux(0, 0, R, &res);
 	return maximo(res); // el maximo del vector
 }
+// Estimo que la complejidad es O(2^n) por FBAux + O(2^n) por el maximo.
+// Me imagino que se puede hacer FBAux de forma divide and conquer, y ahi podriamos justificar la complejidad con el teorema maestro. Deberiamos modificar el algoritmo como para que arme las secuencias y subsecuencias. El paso recursivo seria separado en 2 probl. de n/2 tamano. Una vez que volvamos del paso recursivo, usamos un merge para unir las secuencias de los dos lados. Eso tendria una complejidad. Despues buscariamos la secuencia con mejor k, lo que seria O(2^n * n) (2^n casos de n largo).
 //---------------------------------------------------------------------------------
+/*
 // No elimine tu FB por las dudas
 int FB(int i, int W, int k)
 {
@@ -65,11 +69,11 @@ int FB(int i, int W, int k)
     // Recursión.
     return max(FB(i+1, W, k), FB(i+1, W+w[i], k+1));
 }
-
+*/
+//---------------------------------------------------------------------------------
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
 // Imprime por clog la información de ejecución de los algoritmos.
 // Imprime por cout el resultado de algun algoritmo ejecutado.
-//---------------------------------------------------------------------------------
 int main(int argc, char** argv)
 {
 	// Leemos el parametro que indica el algoritmo a ejecutar.
