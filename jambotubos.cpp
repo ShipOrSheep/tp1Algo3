@@ -22,16 +22,17 @@ vector <int> w;
 // k: cantidad de elementos seleccionados.
 
 //---------------------------------------------------------------------------------
-// Primero lee como llamo a FB
+// La idea de verificar las resistencias es que no importa medir las resistencias pasadas
+// Sino cual resistencia en el momento es mas chica.chica
 void FBAux(int i, int k, int Ractual, vector<int> *res){
-    if (i == n) return Ractual - w[i] < 0 ? k : 0; // en vez de return, deberia ser un append 0 o k al vector de respuestas
 	if (Ractual - w[i] < 0){
-		return 0; // en vez de return, deberia ser un append 0 al vector de respuestas
+		res.push_back(0);
 	} else {
-		return k; // en vez de return, deberia ser un append k al vector de respuestas
+		res.push_back(k);
 	}
+	if(i == n){return;} // Llegue al fondo del arbol de recursion. Ya puse 0 o k en el vector.
 	int Rproxima = min(Ractual - w[i], r[i]);
-    return max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res)); // en vez de return, deberia ser un append k al vector de respuestas
+    res.push_back( max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res)) )
 }
 //---------------------------------------------------------------------------------
 int maximo(vector<int> vec){
