@@ -21,9 +21,45 @@ vector <int> w;
 // W: peso acumulado de los productos.
 // k: cantidad de elementos seleccionados.
 
+//---------------------------------------------------------------------------------
+// Primero lee como llamo a FB
+void FBAux(int i, int k, int Ractual, vector<int> *res){
+    if (i == n) return Ractual - w[i] < 0 ? k : 0; // en vez de return, deberia ser un append 0 o k al vector de respuestas
+	if (Ractual - w[i] < 0){
+		return 0; // en vez de return, deberia ser un append 0 al vector de respuestas
+	} else {
+		return k; // en vez de return, deberia ser un append k al vector de respuestas
+	}
+	int Rproxima = min(Ractual - w[i], r[i]);
+    return max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res)); // en vez de return, deberia ser un append k al vector de respuestas
+}
+//---------------------------------------------------------------------------------
+int maximo(vector<int> vec){
+	int max = 0;
+	for(int i = 0;i< vec.length();i++){
+		if (vec[i] > max){
+			max = vec[i];
+		}
+	}
+	return max;
+}
+//---------------------------------------------------------------------------------
+// Este esria el nuevo FB
+int FB(int i, int W, int k){
+	vector<int> res;
+	FBAux(0, 0, R, &res);
+	return maximo(res); // el maximo del vector
+}
+//---------------------------------------------------------------------------------
+// No elimine tu FB por las dudas
 int FB(int i, int W, int k)
 {
     // Caso base.
+	// if (verificaResistencias(arregloDeEstePaso)){
+		return k;
+	} else {
+		return 0;
+	}
     if (i == n) return W <= R ? k : 0;
 
     // Recursión.
