@@ -22,8 +22,7 @@ vector <int> w;
 // k: cantidad de elementos seleccionados.
 
 //---------------------------------------------------------------------------------
-// La idea de verificar las resistencias es que no importa medir las resistencias pasadas
-// Sino cual resistencia en el momento es mas chica.chica
+// La idea de verificar las resistencias es que solo importa medir la resistencia que se va a romper mas rapido, la cual es la mas chica de las actuales
 void FBAux(int i, int k, int Ractual, vector<int> *res){
 	if (Ractual - w[i] < 0){
 		res.push_back(0);
