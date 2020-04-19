@@ -23,6 +23,7 @@ vector <int> w;
 
 //---------------------------------------------------------------------------------
 // La idea de verificar las resistencias es que solo importa medir la resistencia que se va a romper mas rapido, la cual es la mas chica de las actuales
+// Chequear cual es la que se romperia mas rapido es O(1)
 void FBAux(int i, int k, int Ractual, vector<int> *res){
 	if (Ractual - w[i] < 0){
 		res.push_back(0);
@@ -70,6 +71,38 @@ int FB(int i, int W, int k)
     return max(FB(i+1, W, k), FB(i+1, W+w[i], k+1));
 }
 */
+//---------------------------------------------------------------------------------
+bool poda_factibilidad = true;
+bool poda_optimalidad = true;
+int BT(){
+	vector<int> res; // no nos preocupamos por usar memoria dinamica, <vector> ya la usa
+	int max;
+	BTAux(0, 0, R, &res, poda_factibilidad, poda_optimalidad, &max);
+	return maximo(res); // el maximo del vector
+}
+//---------------------------------------------------------------------------------
+void FBAux(int i, int k, int Ractual, vector<int> *res, bool poda_factibilidad, bool poda_optimalidad, int *max){
+	if(poda_factibilidad){
+		if (Ractual - w[i] < 0){
+			return;
+		} else {
+			res.push_back(k);
+		}
+	}
+/*	if(poda_optimalidad){
+		if( Ractual - w[i] < 0 ){
+			return;
+		} else {
+			//
+		}
+	}
+*/
+// No se me ocurre la poda por optimalidad
+	if(i == n){return;} // Llegue al fondo del arbol de recursion. Ya puse 0 o k en el vector.
+	int Rproxima = min(Ractual - w[i], r[i]);
+    res.push_back( max(FBAux(i+1, k, Rproxima, &res, poda_factibilidad, poda_optimalidad, &max), FB(i+1, k+1, Rproxima, &res, poda_factibilidad, poda_optimalidad, &max)) )
+	return;
+}
 //---------------------------------------------------------------------------------
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
 // Imprime por clog la información de ejecución de los algoritmos.
