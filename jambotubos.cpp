@@ -20,7 +20,7 @@ vector <int> w;
 // w: arreglo que tiene en cada posición el peso del producto.
 // W: peso acumulado de los productos.
 // k: cantidad de elementos seleccionados.
-
+/*
 //---------------------------------------------------------------------------------
 // La idea de verificar las resistencias es que solo importa medir la resistencia que se va a romper mas rapido, la cual es la mas chica de las actuales
 // Chequear cual es la que se romperia mas rapido es O(1)
@@ -55,7 +55,7 @@ int FB(){
 // Estimo que la complejidad es O(2^n) por FBAux + O(2^n) por el maximo.
 // Me imagino que se puede hacer FBAux de forma divide and conquer, y ahi podriamos justificar la complejidad con el teorema maestro. Deberiamos modificar el algoritmo como para que arme las secuencias y subsecuencias. El paso recursivo seria separado en 2 probl. de n/2 tamano. Una vez que volvamos del paso recursivo, usamos un merge para unir las secuencias de los dos lados. Eso tendria una complejidad. Despues buscariamos la secuencia con mejor k, lo que seria O(2^n * n) (2^n casos de n largo).
 //---------------------------------------------------------------------------------
-
+*/
 
 // Ajuste sobre el algoritmo anterior
 int FB(int i, int W, int k, int minR, bool aplastados)
@@ -69,6 +69,7 @@ int FB(int i, int W, int k, int minR, bool aplastados)
 }
 
 //---------------------------------------------------------------------------------
+/*
 bool poda_factibilidad = true;
 bool poda_optimalidad = true;
 int BT(){
@@ -78,7 +79,7 @@ int BT(){
 	return maximo(res); // el maximo del vector
 }
 //---------------------------------------------------------------------------------
-void FBAux(int i, int k, int Ractual, vector<int> *res, bool poda_factibilidad, bool poda_optimalidad, int *max){
+void BTAux(int i, int k, int Ractual, vector<int> *res, bool poda_factibilidad, bool poda_optimalidad, int *max){
 	if(poda_factibilidad){
 		if (Ractual - w[i] < 0){
 			return;
@@ -86,20 +87,21 @@ void FBAux(int i, int k, int Ractual, vector<int> *res, bool poda_factibilidad, 
 			res.push_back(k);
 		}
 	}
-/*	if(poda_optimalidad){
+	if(poda_optimalidad){
 		if( Ractual - w[i] < 0 ){
 			return;
 		} else {
 			//
 		}
 	}
-*/
+
 // No se me ocurre la poda por optimalidad
 	if(i == n){return;} // Llegue al fondo del arbol de recursion. Ya puse 0 o k en el vector.
 	int Rproxima = min(Ractual - w[i], r[i]);
     res.push_back( max(FBAux(i+1, k, Rproxima, &res, poda_factibilidad, poda_optimalidad, &max), FB(i+1, k+1, Rproxima, &res, poda_factibilidad, poda_optimalidad, &max)) )
 	return;
 }
+*/
 //---------------------------------------------------------------------------------
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
 // Imprime por clog la información de ejecución de los algoritmos.
@@ -136,13 +138,15 @@ int main(int argc, char** argv)
 	
     auto start = chrono::steady_clock::now();
     
-    switch (algoritmo) {
-        case "FB": 
-            res = FB(0, 0, 0, R, false);
-            break;
-        default:
-            break;
-    }
+    if (algoritmo == "FB")
+	{
+        res = FB(0, 0, 0, R, false);
+	}
+	else
+	{
+        //Nada
+	}
+	
 	auto end = chrono::steady_clock::now();
 	double total_time = chrono::duration<double, milli>(end - start).count();
 
