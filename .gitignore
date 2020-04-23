@@ -1,5 +1,7 @@
 # Ignore these files:
 tp1.pdf
 /example
+jambotubos
+
 # Ignore vim files
 *.swp
