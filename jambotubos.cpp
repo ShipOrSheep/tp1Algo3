@@ -88,7 +88,11 @@ int BT(int i, int W, int k, int kOptimo, int minR)
 
 /*
 int BT(){
-	return BTAux(0, 0, R, poda_factibilidad, poda_optimalidad, &max);
+	int res = BTAux(0, 0, R, poda_factibilidad, poda_optimalidad, &max);
+	if(res < 0){
+		res = 0;
+	}
+	return res;
 }
 //---------------------------------------------------------------------------------
 // Voy a modificarlo
