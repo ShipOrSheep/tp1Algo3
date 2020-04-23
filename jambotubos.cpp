@@ -22,18 +22,18 @@ vector <int> w;
 // k: cantidad de elementos seleccionados.
 /*
 //---------------------------------------------------------------------------------
-// La idea de verificar las resistencias es que solo importa medir la resistencia que se va a romper mas rapido, la cual es la mas chica de las actuales
-// Chequear cual es la que se romperia mas rapido es O(1)
-void FBAux(int i, int k, int Ractual, vector<int> *res){
-	if (Ractual - w[i] < 0){
-		res.push_back(0);
+// Modifico el FB que hice para que no use vector
+void FBAux(int i, int k, int Ractual){
+	if( i == n ){
+		if (Ractual - w[i] < 0){
+			return 0;
+		} else {
+			return k;
+		}
 	} else {
-		res.push_back(k);
-	}
-	if(i == n){return;} // Llegue al fondo del arbol de recursion. Ya puse 0 o k en el vector.
 	int Rproxima = min(Ractual - w[i], r[i]);
-    res.push_back( max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res)) )
-	return;
+    return  max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res));
+	}
 }
 //---------------------------------------------------------------------------------
 int maximo(vector<int> vec){
@@ -48,12 +48,8 @@ int maximo(vector<int> vec){
 //---------------------------------------------------------------------------------
 // Este esria el nuevo FB
 int FB(){
-	vector<int> res; // no nos preocupamos por usar memoria dinamica, <vector> ya la usa
-	FBAux(0, 0, R, &res);
-	return maximo(res); // el maximo del vector
+	return FBAux(0, 0, R);
 }
-// Estimo que la complejidad es O(2^n) por FBAux + O(2^n) por el maximo.
-// Me imagino que se puede hacer FBAux de forma divide and conquer, y ahi podriamos justificar la complejidad con el teorema maestro. Deberiamos modificar el algoritmo como para que arme las secuencias y subsecuencias. El paso recursivo seria separado en 2 probl. de n/2 tamano. Una vez que volvamos del paso recursivo, usamos un merge para unir las secuencias de los dos lados. Eso tendria una complejidad. Despues buscariamos la secuencia con mejor k, lo que seria O(2^n * n) (2^n casos de n largo).
 //---------------------------------------------------------------------------------
 */
 
@@ -92,33 +88,25 @@ int BT(int i, int W, int k, int kOptimo, int minR)
 
 /*
 int BT(){
-	vector<int> res; // no nos preocupamos por usar memoria dinamica, <vector> ya la usa
-	int max;
-	BTAux(0, 0, R, &res, poda_factibilidad, poda_optimalidad, &max);
-	return maximo(res); // el maximo del vector
+	int res = BTAux(0, 0, R, poda_factibilidad, poda_optimalidad, &max);
+	if(res < 0){
+		res = 0;
+	}
+	return res;
 }
 //---------------------------------------------------------------------------------
-void BTAux(int i, int k, int Ractual, vector<int> *res, bool poda_factibilidad, bool poda_optimalidad, int *max){
-	if(poda_factibilidad){
+// Voy a modificarlo
+void BTAux(int i, int k, int Ractual, poda_f, poda_o){
+	if(poda_f){
 		if (Ractual - w[i] < 0){
-			return;
-		} else {
-			res.push_back(k);
+			return k-1;
 		}
-	}
-	if(poda_optimalidad){
-		if( Ractual - w[i] < 0 ){
-			return;
-		} else {
-			//
-		}
-	}
-
-// No se me ocurre la poda por optimalidad
-	if(i == n){return;} // Llegue al fondo del arbol de recursion. Ya puse 0 o k en el vector.
 	int Rproxima = min(Ractual - w[i], r[i]);
-    res.push_back( max(FBAux(i+1, k, Rproxima, &res, poda_factibilidad, poda_optimalidad, &max), FB(i+1, k+1, Rproxima, &res, poda_factibilidad, poda_optimalidad, &max)) )
-	return;
+    return max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res));
+	}
+	if(poda_o){
+		// ? De que manera entiendo la optimalidad?
+	}
 }
 */
 //---------------------------------------------------------------------------------
