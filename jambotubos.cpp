@@ -80,14 +80,14 @@ int BT(int i, int W, int k, int kOptimo, int minR)
 
     // Poda por factibilidad.
     //Si rompe la bolsa o hay aplastados
-    if (poda_factibilidad && (W > R || (minR - w[i] < 0))) return 0;
+    if (poda_factibilidad && (W > R || minR < 0)) return 0;
 
     // Poda por optimalidad.
     //Si no es posible superar al optimo
     if (poda_optimalidad && (kOptimo > (k + n-i-1))) return 0;
 
     // Recursión.
-    return max(BT(i+1, W, k, kOptimo, minR), BT(i+1, W+w[i], k+1, max(kOptimo, k+1), min(minR - w[i], r[i])));
+    return max(BT(i+1, W, k, max(kOptimo, k), minR), BT(i+1, W+w[i], k+1, max(kOptimo, k+1), min(minR - w[i], r[i])));
 }
 
 /*
@@ -163,6 +163,18 @@ int main(int argc, char** argv)
 	}
 	else if (algoritmo == "BT")
 	{
+        poda_factibilidad = true;
+        poda_optimalidad = true;
+        res = BT(0, 0, 0, 0, R);
+	}
+	else if (algoritmo == "BT-F")
+	{   
+        poda_factibilidad = true;
+        res = BT(0, 0, 0, 0, R);
+	}
+	else if (algoritmo == "BT-O")
+	{   
+        poda_optimalidad = true;
         res = BT(0, 0, 0, 0, R);
 	}
 	else
