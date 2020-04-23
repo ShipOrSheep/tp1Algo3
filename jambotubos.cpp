@@ -92,16 +92,16 @@ int BT(){
 }
 //---------------------------------------------------------------------------------
 // Voy a modificarlo
-void BTAux(int i, int k, int Ractual){
-	if( i == n ){
+void BTAux(int i, int k, int Ractual, poda_f, poda_o){
+	if(poda_f){
 		if (Ractual - w[i] < 0){
-			return 0;
-		} else {
-			return k;
+			return k-1;
 		}
-	} else {
 	int Rproxima = min(Ractual - w[i], r[i]);
-    return  max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res));
+    return max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res));
+	}
+	if(poda_o){
+		// ? De que manera entiendo la optimalidad?
 	}
 }
 */
