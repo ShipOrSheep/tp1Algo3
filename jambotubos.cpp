@@ -76,18 +76,18 @@ bool poda_optimalidad = false;
 int BT(int i, int W, int k, int kOptimo, int minR)
 {
     // Caso base.    
-    if (i == n) return (W <= R) ? kOptimo : 0;
+    if (i == n) return (W <= R && minR >= 0) ? kOptimo : 0;
 
     // Poda por factibilidad.
     //Si rompe la bolsa o hay aplastados
-    if (poda_factibilidad && (W > R || minR < 0)) return 0;
+    if (poda_factibilidad && (W > R || minR - w[i] < 0)) return 0;
 
     // Poda por optimalidad.
     //Si no es posible superar al optimo
     if (poda_optimalidad && (kOptimo > (k + n-i-1))) return 0;
 
     // Recursión.
-    return max(BT(i+1, W, k, max(kOptimo, k), minR), BT(i+1, W+w[i], k+1, max(kOptimo, k+1), min(minR - w[i], r[i])));
+    return max(BT(i+1, W, k, kOptimo, minR), BT(i+1, W+w[i], k+1, max(kOptimo, k+1), min(minR - w[i], r[i])));
 }
 
 /*
