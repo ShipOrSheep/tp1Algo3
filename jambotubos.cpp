@@ -57,7 +57,7 @@ int FB(){
 //---------------------------------------------------------------------------------
 */
 
-// Ajuste sobre el algoritmo anterior
+// Algoritmo FB sin generar vector de elementos
 int FB(int i, int W, int k, int minR, bool aplastados)
 {
     // Caso base.    
@@ -69,9 +69,28 @@ int FB(int i, int W, int k, int minR, bool aplastados)
 }
 
 //---------------------------------------------------------------------------------
+bool poda_factibilidad = false;
+bool poda_optimalidad = false;
+
+//Algoritmo BT sin generar vector de elementos
+int BT(int i, int W, int k, int kOptimo, int minR)
+{
+    // Caso base.    
+    if (i == n) return (W <= R) ? kOptimo : 0;
+
+    // Poda por factibilidad.
+    //Si rompe la bolsa o hay aplastados
+    if (poda_factibilidad && (W > R || (minR - w[i] < 0))) return 0;
+
+    // Poda por optimalidad.
+    //Si no es posible superar al optimo
+    if (poda_optimalidad && (kOptimo > (k + n-i-1))) return 0;
+
+    // Recursión.
+    return max(BT(i+1, W, k, kOptimo, minR), BT(i+1, W+w[i], k+1, max(kOptimo, k+1), min(minR - w[i], r[i])));
+}
+
 /*
-bool poda_factibilidad = true;
-bool poda_optimalidad = true;
 int BT(){
 	vector<int> res; // no nos preocupamos por usar memoria dinamica, <vector> ya la usa
 	int max;
@@ -142,9 +161,13 @@ int main(int argc, char** argv)
 	{
         res = FB(0, 0, 0, R, false);
 	}
+	else if (algoritmo == "BT")
+	{
+        res = BT(0, 0, 0, 0, R);
+	}
 	else
 	{
-        //Nada
+	    //Nada
 	}
 	
 	auto end = chrono::steady_clock::now();
