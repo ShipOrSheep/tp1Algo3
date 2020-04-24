@@ -95,7 +95,6 @@ int BT(){
 	return res;
 }
 //---------------------------------------------------------------------------------
-// Voy a modificarlo
 void BTAux(int i, int k, int Ractual, poda_f, poda_o){
 	if(poda_f){
 		if (Ractual - w[i] < 0){
