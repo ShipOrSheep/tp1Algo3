@@ -1,0 +1,88 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc} % para poder usar tildes en archivos UTF-8
+\usepackage[spanish]{babel} % para que comandos como \today den el resultado en castellano
+\usepackage{a4wide} % márgenes un poco más anchos que lo usual
+\usepackage{caratula}
+% \usepackage[left=3cm,right=3cm,bottom=3cm,top=3cm]{geometry}
+
+% Comandos para simbolos matematicos.
+\usepackage{amsmath, amssymb, tabularx}
+
+% Comandos para referencias
+\usepackage{natbib}
+
+% Comandos para Figuras, Graficos, Tikz etc.
+\usepackage{tikz}
+\usepackage{epsfig}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{epsfig}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{svg}
+
+% Comandos para teoremas etc.
+\usepackage{amsthm}
+\newtheorem{theorem}{Teorema}
+\newtheorem{lemma}[theorem]{Lema}
+\newtheorem{proposition}[theorem]{Proposición}
+\newtheorem{remark}{Observación}
+\newtheorem{corollary}{Corolario}
+% \newproof{proof}{Demostración}
+
+% Comandos para algoritmos.
+\usepackage[noend]{algpseudocode}
+\usepackage{algorithm}
+\algnewcommand{\IfThenElse}[3]{% \IfThenElse{<if>}{<then>}{<else>}
+\State \algorithmicif\ #1\ \algorithmicthen\ #2\ \algorithmicelse\ #3}
+\algnewcommand{\IfThen}[2]{% \IfThenElse{<if>}{<then>}
+  \State \algorithmicif\ #1\ \algorithmicthen\ #2}
+
+\begin{document}
+
+\titulo{TP1: Optimizando Jambo-tubos}
+
+\subtitulo{}
+
+\fecha{\today}
+
+\materia{Algoritmos y Estructuras de datos III}
+
+\integrante{Oshiro, Javier}{715/09}{javieroshiro@hotmail.com}
+
+\maketitle
+
+\tableofcontents
+
+\newpage
+
+\setcounter{page}{1}
+
+\section{Introducción} \label{sec:introduccion}
+
+\section{Fuerza Bruta} \label{sec:fuerza_bruta}
+
+\section{Backtracking} \label{sec:backtracking}
+
+\paragraph{Poda por factibilidad}
+
+\paragraph{Poda por optimalidad}
+
+\section{Programación Dinámica} \label{sec:dp}
+
+\paragraph{Memoización}
+
+\section{Experimentación} \label{sec:experimentacion}
+
+\subsection{Métodos}
+
+\subsection{Instancias}
+
+%EXPERIMENTOS
+%\subsection{Experimento 1}
+%\subsection{Experimento 2}
+%\subsection{Experimento 3}
+
+\section{Conclusiones} \label{sec:conclusiones}
+
+\end{document}
