@@ -5,3 +5,12 @@ jambotubos
 
 # Ignore vim files
 *.swp
+
+# temporales de latex
+*.aux
+*.bbl
+*.blg
+*.synctex.gz
+*.log
+*.toc
+informe/informe.pdf
