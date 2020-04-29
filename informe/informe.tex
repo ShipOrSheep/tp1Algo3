@@ -9,7 +9,7 @@
 \usepackage{amsmath, amssymb, tabularx}
 
 % Comandos para referencias
-\usepackage{natbib}
+\usepackage[square,numbers]{natbib}
 
 % Comandos para Figuras, Graficos, Tikz etc.
 \usepackage{tikz}
@@ -59,8 +59,19 @@
 \setcounter{page}{1}
 
 \section{Introducción} \label{sec:introduccion}
+En este trabajo práctico trabajamos con Jambo-tubos, este es un servicio de la cadena de supermercados Jambo que cuenta con un robot que tiene como objetivo decidir qué productos de los que llegan por una cinta transportadora serán incluidos en un tubo con la idea de lograr la mayor cantidad de productos entubados. Cada producto llega por la cinta en un orden determinado, y se conoce su peso y resistencia individual, por lo que el robot debe manejar esta información para no romper el tubo ni los productos apilados dentro del mismo por el propio peso de cada uno. \cite{ref:enunciado}
+
+Durante el informe desarrollaremos tres técnicas de programación que nos permitirán abordar el problema de los Jambo-tubos: Fuerza Bruta(FB), Backtracking(BT), y por último Programación Dinámica(PD).
 
 \section{Fuerza Bruta} \label{sec:fuerza_bruta}
+EL algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no, en el caso de Jambo-tubos se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar.
+
+\subsection{Implementación y correctitud}
+El algoritmo implementado debe ser recursivo y en cada paso se revisarán dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Esto genera todo el árbol de recursión con todos los casos, todas las ramas completas, siendo las hojas las posibles soluciones, esto nos garantiza la correctitud del algoritmo. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo.
+
+\subsection{Complejidad}
+La complejidad del algoritmo es $O(2^n)$ para el peor caso, pues en cada paso recursivo genera dos llamados la misma función, una para el caso en que se agrega el producto al tubo, y otra para el caso en que no. El árbol de recursión completo cuenta con $n + 1$ niveles contando la raíz, y siendo cada hoja una solución posible. La cantidad de nodos nos indica la cantidad de llamados recursivos realizados que son exactamente $2^n$.
+El resto de las operaciones elementales y comparaciones se realizan en $\theta(1)$.
 
 \section{Backtracking} \label{sec:backtracking}
 
@@ -84,5 +95,10 @@
 %\subsection{Experimento 3}
 
 \section{Conclusiones} \label{sec:conclusiones}
+
+\newpage
+
+\bibliographystyle{abbrvnat} % estilo de bibliografia
+\bibliography{referencias} % importa bib
 
 \end{document}
