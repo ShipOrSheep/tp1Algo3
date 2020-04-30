@@ -112,20 +112,16 @@ void BTAux(int i, int k, int Ractual, poda_f, poda_o){
 // Programación Dinámica (debe ser top down)
 vector<vector<int>> m; // Matriz para memoria de PD
 
-int PD(int i, int W, int minR)
+int DP(int i, int W) //, int minR)
 {
-	if (i == n) {
-	    if (W > R || minR < 0) {
-	        return 0;
-	    }else{
-	        return m[n-1][R-1];
-	    }
-	}
+	if (i == 0 || W <= 0) {return 0;}
 	
-	if (W > R || minR - w[i] < 0) return 0;
+	if (W - w[i-1] < 0) {return 0;}
 	
 	if (m[i][W] == -1) {
-	    m[i][W] = max(PD(i+1, W, minR), 1 + PD(i+1, W+w[i], min(minR - w[i], r[i])));
+//	    int minRAux = (i == 1) ? r[i] : min(minR-w[i], r[i]);
+//	    m[i][W] = max(DP(i-1, W, minR), 1 + DP(i-1, W-w[i], minRAux));
+        m[i][W] = max(DP(i-1, W), 1 + DP(i-1, W-w[i-1]));
 	}
 	
 	return m[i][W];
@@ -191,12 +187,12 @@ int main(int argc, char** argv)
 	{
 		// Precomputamos la solucion para los estados.
 		m = vector<vector<int>>(n+1, vector<int>(R+1, -1));
-		for (int i = 0; i < n+1; ++i)
-			for (int j = 0; j < R+1; ++j)
-				PD(i, j, R);
+		//for (int i = 0; i < n+1; ++i)
+		//	for (int j = 0; j < R+1; ++j)
+		//		PD(i, j, R);
 
 		// Obtenemos la solucion optima.
-		res = PD(n, R, R);
+		res = DP(n, R);
 	}
 	else
 	{
