@@ -108,6 +108,29 @@ void BTAux(int i, int k, int Ractual, poda_f, poda_o){
 	}
 }
 */
+
+// Programación Dinámica (debe ser top down)
+vector<vector<int>> m; // Matriz para memoria de PD
+
+int PD(int i, int W, int minR)
+{
+	if (i == n) {
+	    if (W > R || minR < 0) {
+	        return 0;
+	    }else{
+	        return m[n-1][R-1];
+	    }
+	}
+	
+	if (W > R || minR - w[i] < 0) return 0;
+	
+	if (m[i][W] == -1) {
+	    m[i][W] = max(PD(i+1, W, minR), 1 + PD(i+1, W+w[i], min(minR - w[i], r[i])));
+	}
+	
+	return m[i][W];
+}
+
 //---------------------------------------------------------------------------------
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
 // Imprime por clog la información de ejecución de los algoritmos.
@@ -163,6 +186,17 @@ int main(int argc, char** argv)
 	{   
         poda_optimalidad = true;
         res = BT(0, 0, 0, 0, R);
+	}
+	else if (algoritmo == "DP")
+	{
+		// Precomputamos la solucion para los estados.
+		m = vector<vector<int>>(n+1, vector<int>(R+1, -1));
+		for (int i = 0; i < n+1; ++i)
+			for (int j = 0; j < R+1; ++j)
+				PD(i, j, R);
+
+		// Obtenemos la solucion optima.
+		res = PD(n, R, R);
 	}
 	else
 	{
