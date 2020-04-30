@@ -48,7 +48,8 @@
 
 \materia{Algoritmos y Estructuras de datos III}
 
-\integrante{Oshiro, Javier}{715/09}{javieroshiro@hotmail.com}
+\integrante{Oshiro, Javier Esteban}{715/09}{javieroshiro@hotmail.com}
+\integrante{Castro, Jonatan Daniel}{63/18}{jonatan.dan@hotmail.com}
 
 \maketitle
 
@@ -67,19 +68,32 @@ Durante el informe desarrollaremos tres técnicas de programación que nos permi
 EL algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no, en el caso de Jambo-tubos se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar.
 
 \subsection{Implementación y correctitud}
-El algoritmo implementado debe ser recursivo y en cada paso se revisarán dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Esto genera todo el árbol de recursión con todos los casos, todas las ramas completas, siendo las hojas las posibles soluciones, esto nos garantiza la correctitud del algoritmo. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo.
+El algoritmo implementado debe ser recursivo y en cada paso se revisarán dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Esto genera todo el árbol de recursión con todos los casos, todas las ramas completas, siendo las hojas las posibles soluciones, esto nos garantiza la correctitud del algoritmo. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo. %Falta explicar lo del minimo entre resistencias
 
 \subsection{Complejidad}
 La complejidad del algoritmo es $O(2^n)$ para el peor caso, pues en cada paso recursivo genera dos llamados la misma función, una para el caso en que se agrega el producto al tubo, y otra para el caso en que no. El árbol de recursión completo cuenta con $n + 1$ niveles contando la raíz, y siendo cada hoja una solución posible. La cantidad de nodos nos indica la cantidad de llamados recursivos realizados que son exactamente $2^n$.
 El resto de las operaciones elementales y comparaciones se realizan en $\theta(1)$.
 
 \section{Backtracking} \label{sec:backtracking}
+Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima.
+
+\subsection{Implementación y correctitud}
+En este caso la correctitud es similar a la de Fuerza Bruta ya que el algoritmo solo agrega sobre este último podas que finalizan la búsqueda de soluciones por esa rama.
+
+\subsection{Complejidad}
+La implementación es igual a la del algoritmo de Fuerza Bruta pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo pero caso con complejidad $O(2^n)$. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
 
 \paragraph{Poda por factibilidad}
+Implementada sobre la idea de evitar continuar con ramas en que la suma de los pesos de los productos en el Jambo-tubo superen la resistencia total del mismo.
 
 \paragraph{Poda por optimalidad}
+Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingresando en el Jambo-tubo todos los elementos restantes, no llegaremos a superar el número de elementos ingresados óptimo.
 
 \section{Programación Dinámica} \label{sec:dp}
+
+\subsection{Implementación y correctitud}
+
+\subsection{Complejidad}
 
 \paragraph{Memoización}
 
