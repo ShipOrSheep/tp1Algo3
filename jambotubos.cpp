@@ -76,7 +76,7 @@ int BT(int i, int W, int k, int kOptimo, int minR)
 
     // Poda por factibilidad.
     //Si rompe la bolsa o hay aplastados
-    if (poda_factibilidad && (W > R || minR - w[i] < 0)) return 0;
+    if (poda_factibilidad && (W > R || minR < 0)) return 0;
 
     // Poda por optimalidad.
     //Si no es posible superar al optimo
@@ -118,7 +118,7 @@ int DP(int i, int W, int k, int minR)
 
     // Poda por factibilidad.
     //Si rompe la bolsa o hay aplastados
-    if (poda_factibilidad && (W > R || minR - w[i] < 0)) return 0;
+    if (poda_factibilidad && (W > R || minR < 0)) return 0;
 
     // Poda por optimalidad.
     //Si no es posible superar al optimo
@@ -208,7 +208,10 @@ int main(int argc, char** argv)
 	{
         //Inicializo la matriz
 		m = vector<vector<int>>(n, vector<int>(R+1, -1));
-
+        
+        poda_factibilidad = true;
+        poda_optimalidad = true;
+        
 		// Obtenemos la solucion optima.
 		res = DP(0, 0, 0, R);
 	}
