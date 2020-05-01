@@ -111,8 +111,29 @@ void BTAux(int i, int k, int Ractual, poda_f, poda_o){
 
 // Programación Dinámica (debe ser top down)
 vector<vector<int>> m; // Matriz para memoria de PD
+int DP(int i, int W, int k, int minR)
+{
+    // Caso base.    
+    if (i == n) return (W <= R && minR >= 0) ? k : 0;
 
-int DP(int i, int W) //, int minR)
+    // Poda por factibilidad.
+    //Si rompe la bolsa o hay aplastados
+    if (poda_factibilidad && (W > R || minR - w[i] < 0)) return 0;
+
+    // Poda por optimalidad.
+    //Si no es posible superar al optimo
+    if (poda_optimalidad && (m[i][W] > (k + n-i-1))) return 0;
+
+    // Recursión.
+    if (m[i][W] == -1) {
+        m[i][W] = max(DP(i+1, W, k, minR), DP(i+1, W+w[i], k+1, min(minR - w[i], r[i])));
+    }
+    
+    return m[i][W];
+}   
+
+//Algoritmo DP alternativo
+int DPAlt(int i, int W) //, int minR)
 {
 	if (i == 0 || W <= 0) {return 0;}
 	
@@ -120,8 +141,8 @@ int DP(int i, int W) //, int minR)
 	
 	if (m[i][W] == -1) {
 //	    int minRAux = (i == 1) ? r[i] : min(minR-w[i], r[i]);
-//	    m[i][W] = max(DP(i-1, W, minR), 1 + DP(i-1, W-w[i], minRAux));
-        m[i][W] = max(DP(i-1, W), 1 + DP(i-1, W-w[i-1]));
+//	    m[i][W] = max(DPAlt(i-1, W, minR), 1 + DPAlt(i-1, W-w[i], minRAux));
+        m[i][W] = max(DPAlt(i-1, W), 1 + DPAlt(i-1, W-w[i-1]));
 	}
 	
 	return m[i][W];
@@ -185,14 +206,11 @@ int main(int argc, char** argv)
 	}
 	else if (algoritmo == "DP")
 	{
-		// Precomputamos la solucion para los estados.
-		m = vector<vector<int>>(n+1, vector<int>(R+1, -1));
-		//for (int i = 0; i < n+1; ++i)
-		//	for (int j = 0; j < R+1; ++j)
-		//		PD(i, j, R);
+        //Inicializo la matriz
+		m = vector<vector<int>>(n, vector<int>(R+1, -1));
 
 		// Obtenemos la solucion optima.
-		res = DP(n, R);
+		res = DP(0, 0, 0, R);
 	}
 	else
 	{
