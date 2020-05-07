@@ -65,10 +65,29 @@ En este trabajo práctico trabajamos con Jambo-tubos, este es un servicio de la 
 Durante el informe desarrollaremos tres técnicas de programación que nos permitirán abordar el problema de los Jambo-tubos: Fuerza Bruta(FB), Backtracking(BT), y por último Programación Dinámica(PD).
 
 \section{Fuerza Bruta} \label{sec:fuerza_bruta}
-EL algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no, en el caso de Jambo-tubos se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar.
+EL algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no, en el caso de Jambo-tubos se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar sin romper el tubo ni los productos apilados.
 
 \subsection{Implementación y correctitud}
-El algoritmo implementado debe ser recursivo y en cada paso se revisarán dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Esto genera todo el árbol de recursión con todos los casos, todas las ramas completas, siendo las hojas las posibles soluciones, esto nos garantiza la correctitud del algoritmo. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo. %Falta explicar lo del minimo entre resistencias
+El algoritmo implementado es recursivo y en cada paso se revisarán dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Esto genera todo el árbol de recursión con todos los casos posibles, o sea todas las ramas completas, siendo sus hojas las posibles soluciones, esto nos garantiza la correctitud del algoritmo. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo sin romper el tubo ni los productos apilados.
+
+Para saber si se rompe algún producto dentro del Jambo-tubo guardamos en una variable la mínima resistencia restante entre los productos, para ello calculamos en cada paso el mínimo entre el nuevo producto agregado y la diferencia entre la resistencia mínima restante y el peso del nuevo producto. De esta forma siempre estamos verificando que el producto de menor resistencia restante no se rompa, asegurando el estado del resto de los productos de mayor resistencia. Si se rompe el elemento de menor resistencia restante luego ya sabemos que ese caso hay que descartarlo.
+
+\begin{algorithm}
+	\begin{algorithmic}[1]
+		\Function{$FB$}{$i$, $W$, $k$, $minR$, $aplastados$}
+		\If{$i = n$}
+		\IfThenElse{$W <= R$ $\land$ $!aplastados$}{\textbf{return} $k$}{\textbf{return} $\infty$}
+		\EndIf
+		
+		\State $aplastadosAux \impliedby aplastados$ $||$ $(minR - w[i] < 0)$ 
+		
+		\State \textbf{return} $\min \{ FB(i+1, W, k, minR, aplastados), FB(i+1, W+w[i], k+1, min(minR - w[i], r[i]), aplastadosAux)) \}$.
+		\EndFunction
+	\end{algorithmic}
+	\caption{Algoritmo de Fuerza Bruta.}
+	\label{alg:fuerza_bruta}
+\end{algorithm}
+s 	
 
 \subsection{Complejidad}
 La complejidad del algoritmo es $O(2^n)$ para el peor caso, pues en cada paso recursivo genera dos llamados la misma función, una para el caso en que se agrega el producto al tubo, y otra para el caso en que no. El árbol de recursión completo cuenta con $n + 1$ niveles contando la raíz, y siendo cada hoja una solución posible. La cantidad de nodos nos indica la cantidad de llamados recursivos realizados que son exactamente $2^n$.
