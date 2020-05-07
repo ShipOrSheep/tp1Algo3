@@ -21,8 +21,12 @@ vector <int> w;
 // W: peso acumulado de los productos.
 // k: cantidad de elementos seleccionados.
 /*
+
 //---------------------------------------------------------------------------------
-// Modifico el FB que hice para que no use vector
+// Version alt.
+// La idea es que R es la resistencia de un elemento con peso cero, 
+// el cual es anterior al primer elemento que viene por la cinta
+// De esa forma sacamos el caso de "revisar si se rompe el tubo"
 void FBAux(int i, int k, int Ractual){
 	if( i == n ){
 		if (Ractual - w[i] < 0){
@@ -36,7 +40,12 @@ void FBAux(int i, int k, int Ractual){
 	}
 }
 //---------------------------------------------------------------------------------
-int maximo(vector<int> vec){
+// Asi se llamaria a FB con la forma de arriba
+int FB(){
+	return FBAux(0, 0, R);
+}
+//---------------------------------------------------------------------------------
+int maximoVector(vector<int> vec){
 	int max = 0;
 	for(int i = 0;i< vec.length();i++){
 		if (vec[i] > max){
@@ -46,13 +55,9 @@ int maximo(vector<int> vec){
 	return max;
 }
 //---------------------------------------------------------------------------------
-// Este esria el nuevo FB
-int FB(){
-	return FBAux(0, 0, R);
-}
-//---------------------------------------------------------------------------------
 */
 
+// Version Principal
 // Algoritmo FB sin generar vector de elementos
 int FB(int i, int W, int k, int minR, bool aplastados)
 {
@@ -68,6 +73,7 @@ int FB(int i, int W, int k, int minR, bool aplastados)
 bool poda_factibilidad = false;
 bool poda_optimalidad = false;
 
+// Version principal
 //Algoritmo BT sin generar vector de elementos
 int BT(int i, int W, int k, int kOptimo, int minR)
 {
@@ -95,6 +101,7 @@ int BT(){
 	return res;
 }
 //---------------------------------------------------------------------------------
+// Version alternativa
 void BTAux(int i, int k, int Ractual, poda_f, poda_o){
 	if(poda_f){
 		if (Ractual - w[i] < 0){
@@ -110,6 +117,7 @@ void BTAux(int i, int k, int Ractual, poda_f, poda_o){
 */
 
 // Programación Dinámica (debe ser top down)
+// TODO no deberiamos tener "podas" Son casos base.
 vector<vector<int>> m; // Matriz para memoria de PD
 int DP(int i, int W, int k, int minR)
 {
@@ -133,10 +141,14 @@ int DP(int i, int W, int k, int minR)
 }   
 
 //Algoritmo DP alternativo
+// TODO esta bien tener en cuenta el minR, porque este algoritmo sin tener en cuenta el minR es el problema de la mochila
+// TODO podriamos pensarlo al reves, ir desde el principio hasta el final, haciendo i+1 y teniendo en cuenta el minR
 int DPAlt(int i, int W) //, int minR)
 {
 	if (i == 0 || W <= 0) {return 0;}
 	
+	// Este caso no hace falta verlo, ya lo cubris cuando haces  DPAlt( i-1, W-w[i-1] ) en el llamado recursivo
+// Creo que te estas confundiendo entre el caso actual y el siguiente, porque para que funcione lo que te dije en la linea anterior, deberias hacer DPAlt( i-1, W-w[i] )
 	if (W - w[i-1] < 0) {return 0;}
 	
 	if (m[i][W] == -1) {
@@ -147,6 +159,26 @@ int DPAlt(int i, int W) //, int minR)
 	
 	return m[i][W];
 }
+
+//---------------------------------------------------------------------------------
+// TODO revisa que te parece esta modificacion Javi
+// Algoritmo DP alternativo, de Javier, pero modificado por Jona para que vaya desde atras para adelante
+/*
+int DPAlt_Aux(int i, int Ractual, int cantElem) // cantElem es la cantidad total de elementos
+{
+	if (i == cantElem || Ractual <= 0) {return 0;}
+	
+	if (m[i][W] == -1) {
+	    int Rproximo = min(Ractual-w[i], r[i]);
+        m[i][W] = max(DPAlt(i+1, Ractual), 1 + DPAlt(i+1, Rproximo));
+	}
+	
+	return m[i][Ractual];
+}
+int DPAlt(){
+	return DPAlt_Aux(0,R,n); // Empiezo con la resistencia del jambotubo, es como si fuera un elemento que viene por la cinta, pero con peso cero
+}
+*/
 
 //---------------------------------------------------------------------------------
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
