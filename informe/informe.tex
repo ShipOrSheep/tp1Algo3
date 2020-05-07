@@ -108,7 +108,7 @@ Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingr
 
 \begin{algorithm}
 	\begin{algorithmic}[1]
-		\Function{$FB$}{$i$, $W$, $k$, $minR$, $kOptimo$}
+		\Function{$BT$}{$i$, $W$, $k$, $minR$, $kOptimo$}
 
 		\If{$i = n$}
 			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $kOptimo$}{\textbf{return} $\infty$}
@@ -135,7 +135,7 @@ La implementación es igual a la del algoritmo de Fuerza Bruta pero en cada paso
 
 \subsection{Complejidad}
 
-\paragraph{Memoización}
+\subsection{Memoización}
 
 \section{Experimentación} \label{sec:experimentacion}
 
