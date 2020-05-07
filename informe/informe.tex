@@ -65,7 +65,7 @@ En este trabajo práctico trabajamos con Jambo-tubos, este es un servicio de la 
 Durante el informe desarrollaremos tres técnicas de programación que nos permitirán abordar el problema de los Jambo-tubos: Fuerza Bruta(FB), Backtracking(BT), y por último Programación Dinámica(PD).
 
 \section{Fuerza Bruta} \label{sec:fuerza_bruta}
-EL algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no, en el caso de Jambo-tubos se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar sin romper el tubo ni los productos apilados.
+El algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no, en el caso de Jambo-tubos se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar sin romper el tubo ni los productos apilados.
 
 \subsection{Implementación y correctitud}
 El algoritmo implementado es recursivo y en cada paso se revisarán dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Esto genera todo el árbol de recursión con todos los casos posibles, o sea todas las ramas completas, siendo sus hojas las posibles soluciones, esto nos garantiza la correctitud del algoritmo. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo sin romper el tubo ni los productos apilados.
@@ -80,7 +80,7 @@ Para saber si se rompe algún producto dentro del Jambo-tubo guardamos en una va
 			\IfThenElse{$W <= R$ $\land$ $!aplastados$}{\textbf{return} $k$}{\textbf{return} $\infty$}
 		\EndIf
 		
-		\State $aplastadosAux \impliedby aplastados$ $||$ $(minR - w[i] < 0)$ 
+		\State $aplastadosAux \leftarrow aplastados$ $||$ $(minR - w[i] < 0)$ 
 		
 		\State \textbf{return} $\min \{ FB(i+1, W, k, minR, aplastados), FB(i+1, W+w[i], k+1, min(minR - w[i], r[i]), aplastadosAux)) \}$.
 
@@ -95,13 +95,13 @@ La complejidad del algoritmo es $O(2^n)$ para el peor caso, pues en cada paso re
 El resto de las operaciones elementales y comparaciones se realizan en $\theta(1)$.
 
 \section{Backtracking} \label{sec:backtracking}
-Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima.
+Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre el que se aplica la poda lleva a una solución esperada.
 
 \subsection{Implementación y correctitud}
-En este caso la correctitud es similar a la de Fuerza Bruta ya que el algoritmo solo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros.
+En este caso la correctitud es similar a la de Fuerza Bruta ya que el algoritmo sólo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros.
 
 \paragraph{Poda por factibilidad}
-Implementada sobre la idea de evitar continuar con ramas en que la suma de los pesos de los productos en el Jambo-tubo superen la resistencia total del mismo.
+Implementada sobre la idea de evitar continuar con ramas en que la suma de los pesos de los productos en el Jambo-tubo superen la resistencia total del mismo, o rompan alguno de los productos dentro del tubo.
 
 \paragraph{Poda por optimalidad}
 Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingresando en el Jambo-tubo todos los elementos restantes, no llegaremos a superar el número de elementos ingresados óptimo.
@@ -127,15 +127,40 @@ Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingr
 \end{algorithm}
 
 \subsection{Complejidad}
-La implementación es igual a la del algoritmo de Fuerza Bruta pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo pero caso con complejidad $O(2^n)$. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
+La implementación es igual a la del algoritmo de Fuerza Bruta pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo peor caso con complejidad $O(2^n)$ sumado a la complejidad propia de cada poda. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
 
 \section{Programación Dinámica} \label{sec:dp}
+La programación dinámica tiene como característica evitar calcular valores que ya fueron calculados dentro de las implementaciones recursivas. Por la naturaleza recursiva de un problema podemos tener casos en que un sub-árbol se calcule más de una única vez generando cómputo innecesario. En programación dinámica podemos resolver este problema utilizando un diccionario que contenga todos los valores calculados hasta el momento para poder reutilizarlos.
 
 \subsection{Implementación y correctitud}
+La implementación es recursiva y similar a la de los métodos anteriores, con el agregado de que cada valor calculado se graba en una matriz para poder ser reutilizado. Esta matriz se inicializa con valores $-1$ que es un número que no pertenece al conjunto de soluciones, de esta forma podemos conocer qué valores ya se calcularon.
+
+\paragraph{Memoización}
+La estructura de memoización utilizada es una matriz que tiene por fila la cantidad de elementos que pasaron por la cinta, y por columnas el peso acumulado. Cada valor de la matriz corresponde con el máximo número de elementos ingresados en el Jambo-tubo tomando solo los primeros $f$ elementos de la cinta y con una cota superior de peso de $c$, que corresponde con los posibles estados con los que se puede llamar a la función.
+
+\begin{algorithm}
+	\begin{algorithmic}[1]
+		\Function{$PD$}{$i$, $W$, $k$, $minR$}
+		
+		\If{$i = n$}
+			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $k$}{\textbf{return} $\infty$}
+		\EndIf
+		
+		\If{$m[i][W] == -1$}
+			$m[i][W] \leftarrow max(DP(i+1, W, k, minR), DP(i+1, W+w[i], k+1, min(minR-w[i], r[i])))$
+		\EndIf
+		
+		\State \textbf{return} $m[i][W]$.
+		
+		\EndFunction
+	\end{algorithmic}
+	\caption{Algoritmo de Programación Dinámica.}
+	\label{alg:dinamica}
+\end{algorithm}
 
 \subsection{Complejidad}
-
-\subsection{Memoización}
+La complejidad del algoritmo de programación dinámica está determinada por la cantidad de estados que se resuelven y el costo de resolver cada uno de ellos.
+Sabemos que la matriz tiene una dimensión de $n * R$ que es la cantidad de elementos por la resistencia total del tubo. Para inicializar la matriz insumimos $O(n * R)$ y en el algoritmo a lo sumo se resuelven $O(n * R)$ estados distintos que equivale a completar la matriz. Como las operaciones son elementales o calcular un máximo entonces cada cálculo se resuelve en $\theta(1)$. Finalmente el algoritmo tiene complejidad $O(n * R)$ en el peor caso.
 
 \section{Experimentación} \label{sec:experimentacion}
 
