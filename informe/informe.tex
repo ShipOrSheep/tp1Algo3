@@ -75,19 +75,20 @@ Para saber si se rompe algún producto dentro del Jambo-tubo guardamos en una va
 \begin{algorithm}
 	\begin{algorithmic}[1]
 		\Function{$FB$}{$i$, $W$, $k$, $minR$, $aplastados$}
+
 		\If{$i = n$}
-		\IfThenElse{$W <= R$ $\land$ $!aplastados$}{\textbf{return} $k$}{\textbf{return} $\infty$}
+			\IfThenElse{$W <= R$ $\land$ $!aplastados$}{\textbf{return} $k$}{\textbf{return} $\infty$}
 		\EndIf
 		
 		\State $aplastadosAux \impliedby aplastados$ $||$ $(minR - w[i] < 0)$ 
 		
 		\State \textbf{return} $\min \{ FB(i+1, W, k, minR, aplastados), FB(i+1, W+w[i], k+1, min(minR - w[i], r[i]), aplastadosAux)) \}$.
+
 		\EndFunction
 	\end{algorithmic}
 	\caption{Algoritmo de Fuerza Bruta.}
 	\label{alg:fuerza_bruta}
-\end{algorithm}
-s 	
+\end{algorithm} 	
 
 \subsection{Complejidad}
 La complejidad del algoritmo es $O(2^n)$ para el peor caso, pues en cada paso recursivo genera dos llamados la misma función, una para el caso en que se agrega el producto al tubo, y otra para el caso en que no. El árbol de recursión completo cuenta con $n + 1$ niveles contando la raíz, y siendo cada hoja una solución posible. La cantidad de nodos nos indica la cantidad de llamados recursivos realizados que son exactamente $2^n$.
@@ -97,16 +98,36 @@ El resto de las operaciones elementales y comparaciones se realizan en $\theta(1
 Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima.
 
 \subsection{Implementación y correctitud}
-En este caso la correctitud es similar a la de Fuerza Bruta ya que el algoritmo solo agrega sobre este último podas que finalizan la búsqueda de soluciones por esa rama.
-
-\subsection{Complejidad}
-La implementación es igual a la del algoritmo de Fuerza Bruta pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo pero caso con complejidad $O(2^n)$. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
+En este caso la correctitud es similar a la de Fuerza Bruta ya que el algoritmo solo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros.
 
 \paragraph{Poda por factibilidad}
 Implementada sobre la idea de evitar continuar con ramas en que la suma de los pesos de los productos en el Jambo-tubo superen la resistencia total del mismo.
 
 \paragraph{Poda por optimalidad}
 Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingresando en el Jambo-tubo todos los elementos restantes, no llegaremos a superar el número de elementos ingresados óptimo.
+
+\begin{algorithm}
+	\begin{algorithmic}[1]
+		\Function{$FB$}{$i$, $W$, $k$, $minR$, $kOptimo$}
+
+		\If{$i = n$}
+			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $kOptimo$}{\textbf{return} $\infty$}
+		\EndIf
+		
+		\If{$poda\_factibilidad$ $\land$ $(W > R$ $||$ $minR < 0)$}{ \textbf{return} $\infty$}\EndIf
+		
+		\If{$poda\_optimalidad$ $\land$ $(kOptimo > (k + n-i-1))$}{ \textbf{return} $\infty$}\EndIf
+		
+		\State \textbf{return} $\min \{ BT(i+1, W, k, minR, kOptimo), BT(i+1, W+w[i], k+1, min(minR - w[i], r[i]), max(kOptimo, k+1))) \}$.
+		
+		\EndFunction
+	\end{algorithmic}
+	\caption{Algoritmo de Backtracking.}
+	\label{alg:backtracking}
+\end{algorithm}
+
+\subsection{Complejidad}
+La implementación es igual a la del algoritmo de Fuerza Bruta pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo pero caso con complejidad $O(2^n)$. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
 
 \section{Programación Dinámica} \label{sec:dp}
 
