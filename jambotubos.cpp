@@ -145,8 +145,6 @@ int DPAlt(int i, int W) //, int minR)
 {
 	if (i == 0 || W <= 0) {return 0;}
 	
-	// Este caso no hace falta verlo, ya lo cubris cuando haces  DPAlt( i-1, W-w[i-1] ) en el llamado recursivo
-// Creo que te estas confundiendo entre el caso actual y el siguiente, porque para que funcione lo que te dije en la linea anterior, deberias hacer DPAlt( i-1, W-w[i] )
 	if (W - w[i-1] < 0) {return 0;}
 	
 	if (m[i][W] == -1) {

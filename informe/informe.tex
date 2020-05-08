@@ -133,21 +133,26 @@ La implementación es igual a la del algoritmo de Fuerza Bruta pero en cada paso
 La programación dinámica tiene como característica evitar calcular valores que ya fueron calculados dentro de las implementaciones recursivas. Por la naturaleza recursiva de un problema podemos tener casos en que un sub-árbol se calcule más de una única vez generando cómputo innecesario. En programación dinámica podemos resolver este problema utilizando un diccionario que contenga todos los valores calculados hasta el momento para poder reutilizarlos.
 
 \subsection{Implementación y correctitud}
-La implementación es recursiva y similar a la de los métodos anteriores, con el agregado de que cada valor calculado se graba en una matriz para poder ser reutilizado. Esta matriz se inicializa con valores $-1$ que es un número que no pertenece al conjunto de soluciones, de esta forma podemos conocer qué valores ya se calcularon.
-
+La implementación es recursiva y similar a la de los métodos anteriores, con el agregado de que al momento de hacer el paso recursivo se verifica que no se haya calculado ya. Si se calculo, no se entra al paso, sino que se obtiene el valor de una matriz de memoización. Los casos base seríancuando el peso actual aplasta un elemento de abajo o destruye el jambotubo, y cuando se llega al final de la cinta transportadora. El paso recursivo en realidad comprende dos casos: cuando agregamos el elemento actual, y cuando no lo agregamos. En cada paso se tiene $i$ el indicador de en qué elemento de la cinta voy a tomar la decisión de meter o no en el jambotubo, y se tiene $Ractual$ la resistencia acumulada. La resistencia acumulada es la mínima resistencia necesaria para romper el jambotubo o para aplastar algún elemento: si el peso del elemento actual sobrepasa $Ractual$, algo salió mal. La resistencia acumulada se elige como el mínimo entre la resistencia del elemento que estoy metiendo, y la resistencia anterior menos el peso del elemento actual.
 \paragraph{Memoización}
-La estructura de memoización utilizada es una matriz que tiene por fila la cantidad de elementos que pasaron por la cinta, y por columnas el peso acumulado. Cada valor de la matriz corresponde con el máximo número de elementos ingresados en el Jambo-tubo tomando solo los primeros $f$ elementos de la cinta y con una cota superior de peso de $c$, que corresponde con los posibles estados con los que se puede llamar a la función.
+La estructura de memoización utilizada es una matriz que tiene por tamaño de fila la cantidad total de elementos de la cinta, y por tamaño de columna la resistencia del jambotubo. Cada valor de la matriz corresponde con el máximo número de elementos ingresados en el Jambo-tubo en el paso $i$ con la resistencia acumulada $Ractual$ resultante de haber metido o no elementos anteriores. Esta forma de definir las filas y columnas se corresponde con la aridad de nuestra función.
+La memoización se da cuando en distintas ramas de la ejecución del algoritmo, en un paso $i$, se repite el valor de la resistencia acumulada. Un ejemplo de esto puede ser una instancia en donde el segundo elemento es igual en resistencia y peso al tercer elemento. Luego, van a haber una rama en donde no se agregue el segundo elemento y sí el tercero, y va a existir otra rama en donde se haga lo contrario. Como las ramas coinciden en Resistencia acumulada va a entrar en juego la memoización.
 % Cambiamos de algoritmo
 \begin{algorithm}
 	\begin{algorithmic}[1]
-		\Function{$PD$}{$i$, $W$, $k$, $minR$}
+		\Function{$PD$}{$i$, $Ractual$}}
 		
+		\If{$Ractual$ < $0$}
+			\textbf{return} $-1$
+		\EndIf
+
 		\If{$i = n$}
-			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $k$}{\textbf{return} $0$}
+			\textbf{return} $0$
 		\EndIf
 		
 		\If{$m[i][W] == -1$}
-			$m[i][W] \leftarrow max(DP(i+1, W, k, minR), DP(i+1, W+w[i], k+1, min(minR-w[i], r[i])))$
+			Rproxima = min(Ractual - w[i], r[i])
+			$m[i][W] \leftarrow max(DP(i+1, Ractual), DP(i+1, Rproxima))$
 		\EndIf
 		
 		\State \textbf{return} $m[i][W]$.
