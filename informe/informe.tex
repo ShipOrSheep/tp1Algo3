@@ -77,12 +77,12 @@ Para saber si se rompe algún producto dentro del Jambo-tubo guardamos en una va
 		\Function{$FB$}{$i$, $W$, $k$, $minR$, $aplastados$}
 
 		\If{$i = n$}
-			\IfThenElse{$W <= R$ $\land$ $!aplastados$}{\textbf{return} $k$}{\textbf{return} $\infty$}
+			\IfThenElse{$W <= R$ $\land$ $!aplastados$}{\textbf{return} $k$}{\textbf{return} $0$}
 		\EndIf
 		
 		\State $aplastadosAux \leftarrow aplastados$ $||$ $(minR - w[i] < 0)$ 
 		
-		\State \textbf{return} $\min \{ FB(i+1, W, k, minR, aplastados), FB(i+1, W+w[i], k+1, min(minR - w[i], r[i]), aplastadosAux)) \}$.
+		\State \textbf{return} $\max \{ FB(i+1, W, k, minR, aplastados), FB(i+1, W+w[i], k+1, min(minR - w[i], r[i]), aplastadosAux)) \}$.
 
 		\EndFunction
 	\end{algorithmic}
@@ -111,14 +111,14 @@ Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingr
 		\Function{$BT$}{$i$, $W$, $k$, $minR$, $kOptimo$}
 
 		\If{$i = n$}
-			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $kOptimo$}{\textbf{return} $\infty$}
+			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $kOptimo$}{\textbf{return} $0$}
 		\EndIf
 		
-		\If{$poda\_factibilidad$ $\land$ $(W > R$ $||$ $minR < 0)$}{ \textbf{return} $\infty$}\EndIf
+		\If{$poda\_factibilidad$ $\land$ $(W > R$ $||$ $minR < 0)$}{ \textbf{return} $0$}\EndIf
 		
-		\If{$poda\_optimalidad$ $\land$ $(kOptimo > (k + n-i-1))$}{ \textbf{return} $\infty$}\EndIf
+		\If{$poda\_optimalidad$ $\land$ $(kOptimo > (k + n-i-1))$}{ \textbf{return} $0$}\EndIf
 		
-		\State \textbf{return} $\min \{ BT(i+1, W, k, minR, kOptimo), BT(i+1, W+w[i], k+1, min(minR - w[i], r[i]), max(kOptimo, k+1))) \}$.
+		\State \textbf{return} $\max \{ BT(i+1, W, k, minR, kOptimo), BT(i+1, W+w[i], k+1, min(minR - w[i], r[i]), max(kOptimo, k+1))) \}$.
 		
 		\EndFunction
 	\end{algorithmic}
@@ -137,13 +137,13 @@ La implementación es recursiva y similar a la de los métodos anteriores, con e
 
 \paragraph{Memoización}
 La estructura de memoización utilizada es una matriz que tiene por fila la cantidad de elementos que pasaron por la cinta, y por columnas el peso acumulado. Cada valor de la matriz corresponde con el máximo número de elementos ingresados en el Jambo-tubo tomando solo los primeros $f$ elementos de la cinta y con una cota superior de peso de $c$, que corresponde con los posibles estados con los que se puede llamar a la función.
-
+% Cambiamos de algoritmo
 \begin{algorithm}
 	\begin{algorithmic}[1]
 		\Function{$PD$}{$i$, $W$, $k$, $minR$}
 		
 		\If{$i = n$}
-			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $k$}{\textbf{return} $\infty$}
+			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $k$}{\textbf{return} $0$}
 		\EndIf
 		
 		\If{$m[i][W] == -1$}
