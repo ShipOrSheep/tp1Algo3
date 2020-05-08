@@ -20,42 +20,7 @@ vector <int> w;
 // w: arreglo que tiene en cada posición el peso del producto.
 // W: peso acumulado de los productos.
 // k: cantidad de elementos seleccionados.
-/*
 
-//---------------------------------------------------------------------------------
-// Version alt.
-// La idea es que R es la resistencia de un elemento con peso cero, 
-// el cual es anterior al primer elemento que viene por la cinta
-// De esa forma sacamos el caso de "revisar si se rompe el tubo"
-void FBAux(int i, int k, int Ractual){
-	if( i == n ){
-		if (Ractual - w[i] < 0){
-			return 0;
-		} else {
-			return k;
-		}
-	} else {
-	int Rproxima = min(Ractual - w[i], r[i]);
-    return  max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res));
-	}
-}
-//---------------------------------------------------------------------------------
-// Asi se llamaria a FB con la forma de arriba
-int FB(){
-	return FBAux(0, 0, R);
-}
-//---------------------------------------------------------------------------------
-int maximoVector(vector<int> vec){
-	int max = 0;
-	for(int i = 0;i< vec.length();i++){
-		if (vec[i] > max){
-			max = vec[i];
-		}
-	}
-	return max;
-}
-//---------------------------------------------------------------------------------
-*/
 
 // Version Principal
 // Algoritmo FB sin generar vector de elementos
@@ -92,85 +57,17 @@ int BT(int i, int W, int k, int kOptimo, int minR)
     return max(BT(i+1, W, k, kOptimo, minR), BT(i+1, W+w[i], k+1, max(kOptimo, k+1), min(minR - w[i], r[i])));
 }
 
-/*
-int BT(){
-	int res = BTAux(0, 0, R, poda_factibilidad, poda_optimalidad, &max);
-	if(res < 0){
-		res = 0;
-	}
-	return res;
-}
 //---------------------------------------------------------------------------------
-// Version alternativa
-void BTAux(int i, int k, int Ractual, poda_f, poda_o){
-	if(poda_f){
-		if (Ractual - w[i] < 0){
-			return k-1;
-		}
-	int Rproxima = min(Ractual - w[i], r[i]);
-    return max(FBAux(i+1, k, Rproxima, &res), FB(i+1, k+1, Rproxima, &res));
-	}
-	if(poda_o){
-		// ? De que manera entiendo la optimalidad?
-	}
-}
-*/
-
-// Programación Dinámica (debe ser top down)
-// TODO no deberiamos tener "podas" Son casos base.
-vector<vector<int>> m; // Matriz para memoria de PD
-int DP(int i, int W, int k, int minR)
-{
-    // Caso base.    
-    if (i == n) return (W <= R && minR >= 0) ? k : 0;
-
-    // Poda por factibilidad.
-    //Si rompe la bolsa o hay aplastados
-    if (poda_factibilidad && (W > R || minR < 0)) return 0;
-
-    // Poda por optimalidad.
-    //Si no es posible superar al optimo
-    if (poda_optimalidad && (m[i][W] > (k + n-i-1))) return 0;
-
-    // Recursión.
-    if (m[i][W] == -1) {
-        m[i][W] = max(DP(i+1, W, k, minR), DP(i+1, W+w[i], k+1, min(minR - w[i], r[i])));
-    }
-    
-    return m[i][W];
-}   
-
-//Algoritmo DP alternativo
-int DPAlt(int i, int W) //, int minR)
-{
-	if (i == 0 || W <= 0) {return 0;}
-	
-	if (W - w[i-1] < 0) {return 0;}
-	
-	if (m[i][W] == -1) {
-//	    int minRAux = (i == 1) ? r[i] : min(minR-w[i], r[i]);
-//	    m[i][W] = max(DPAlt(i-1, W, minR), 1 + DPAlt(i-1, W-w[i], minRAux));
-        m[i][W] = max(DPAlt(i-1, W), 1 + DPAlt(i-1, W-w[i-1]));
-	}
-	
-	return m[i][W];
-}
-
-//---------------------------------------------------------------------------------
-// Algoritmo DP alternativo, de Javier, pero modificado por Jona para que vaya desde atras para adelante
-int DPAlt_Aux(int i, int Ractual, int cantElem) // cantElem es la cantidad total de elementos
+int DP(int i, int Ractual) // cantElem es la cantidad total de elementos
 {
 	if(Ractual < 0) {return -1;} // si caigo con i == n, pero el peso rompio algun elemento o el jambotubo, tengo que restar el haber sumado el elemento en el paso anterior. Por eso escribo este if antes del siguiente if
-	if (i == cantElem ) {return 0;} // Estoy seguro de que no rompi ningun objeto, asi que no resto lo que sume antes (ademas de que si no lo hago asi, el caso en que no hay ningun objeto posible devolveria -1, un horror)
-	if (m[i][W] == -1) {
+	if (i == n ) {return 0;} // Estoy seguro de que no rompi ningun objeto, asi que no resto lo que sume antes (ademas de que si no lo hago asi, el caso en que no hay ningun objeto posible devolveria -1, un horror)
+	if (m[i][Ractual] == -1) {
 	    int Rproximo = min(Ractual-w[i], r[i]);
-        m[i][W] = max(DPAlt_Aux(i+1, Ractual), 1 + DPAlt_Aux(i+1, Rproximo));
+        m[i][Ractual] = max(DP(i+1, Ractual), 1 + DP(i+1, Rproximo));
 	}
 	
 	return m[i][Ractual];
-}
-int DPAlt_V2(){ // Aridad?
-	return DPAlt_Aux(0,R,n); // Empiezo con la resistencia del jambotubo, es como si fuera el primer elemento que viene por la cinta, pero con peso cero
 }
 //---------------------------------------------------------------------------------
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
@@ -233,11 +130,8 @@ int main(int argc, char** argv)
         //Inicializo la matriz
 		m = vector<vector<int>>(n, vector<int>(R+1, -1));
         
-        poda_factibilidad = true;
-        poda_optimalidad = true;
-        
 		// Obtenemos la solucion optima.
-		res = DP(0, 0, 0, R);
+		res = DP(0, R);
 	}
 	else
 	{
