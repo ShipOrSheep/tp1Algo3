@@ -141,8 +141,6 @@ int DP(int i, int W, int k, int minR)
 }   
 
 //Algoritmo DP alternativo
-// TODO esta bien tener en cuenta el minR, porque este algoritmo sin tener en cuenta el minR es el problema de la mochila
-// TODO podriamos pensarlo al reves, ir desde el principio hasta el final, haciendo i+1 y teniendo en cuenta el minR
 int DPAlt(int i, int W) //, int minR)
 {
 	if (i == 0 || W <= 0) {return 0;}
@@ -161,16 +159,14 @@ int DPAlt(int i, int W) //, int minR)
 }
 
 //---------------------------------------------------------------------------------
-// TODO revisa que te parece esta modificacion Javi
 // Algoritmo DP alternativo, de Javier, pero modificado por Jona para que vaya desde atras para adelante
-/*
 int DPAlt_Aux(int i, int Ractual, int cantElem) // cantElem es la cantidad total de elementos
 {
-	if (i == cantElem || Ractual <= 0) {return 0;}
+	if (i == cantElem || Ractual < 0) {return 0;} // en vez de Ractual <= 0, pongo Ractual < 0, pues el caso en que Ractual es = a cero no se aplasta el objeto asociado a esa resistencia. Un objeto solo se aplasta si se sobrepaso su resistencia
 	
 	if (m[i][W] == -1) {
 	    int Rproximo = min(Ractual-w[i], r[i]);
-        m[i][W] = max(DPAlt(i+1, Ractual), 1 + DPAlt(i+1, Rproximo));
+        m[i][W] = max(DPAlt_Aux(i+1, Ractual), 1 + DPAlt_Aux(i+1, Rproximo));
 	}
 	
 	return m[i][Ractual];
@@ -178,7 +174,6 @@ int DPAlt_Aux(int i, int Ractual, int cantElem) // cantElem es la cantidad total
 int DPAlt(){
 	return DPAlt_Aux(0,R,n); // Empiezo con la resistencia del jambotubo, es como si fuera un elemento que viene por la cinta, pero con peso cero
 }
-*/
 
 //---------------------------------------------------------------------------------
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
