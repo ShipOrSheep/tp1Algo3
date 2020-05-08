@@ -162,8 +162,8 @@ int DPAlt(int i, int W) //, int minR)
 // Algoritmo DP alternativo, de Javier, pero modificado por Jona para que vaya desde atras para adelante
 int DPAlt_Aux(int i, int Ractual, int cantElem) // cantElem es la cantidad total de elementos
 {
-	if (i == cantElem || Ractual < 0) {return 0;} // en vez de Ractual <= 0, pongo Ractual < 0, pues el caso en que Ractual es = a cero no se aplasta el objeto asociado a esa resistencia. Un objeto solo se aplasta si se sobrepaso su resistencia
-	
+	if(Ractual < 0) {return -1;} // si caigo con i == n, pero el peso rompio algun elemento o el jambotubo, tengo que restar el haber sumado el elemento en el paso anterior. Por eso escribo este if antes del siguiente if
+	if (i == cantElem ) {return 0;} // Estoy seguro de que no rompi ningun objeto, asi que no resto lo que sume antes (ademas de que si no lo hago asi, el caso en que no hay ningun objeto posible devolveria -1, un horror)
 	if (m[i][W] == -1) {
 	    int Rproximo = min(Ractual-w[i], r[i]);
         m[i][W] = max(DPAlt_Aux(i+1, Ractual), 1 + DPAlt_Aux(i+1, Rproximo));
@@ -171,10 +171,9 @@ int DPAlt_Aux(int i, int Ractual, int cantElem) // cantElem es la cantidad total
 	
 	return m[i][Ractual];
 }
-int DPAlt(){
-	return DPAlt_Aux(0,R,n); // Empiezo con la resistencia del jambotubo, es como si fuera un elemento que viene por la cinta, pero con peso cero
+int DPAlt_V2(){ // Aridad?
+	return DPAlt_Aux(0,R,n); // Empiezo con la resistencia del jambotubo, es como si fuera el primer elemento que viene por la cinta, pero con peso cero
 }
-
 //---------------------------------------------------------------------------------
 // Recibe por parámetro qué algoritmos utilizar para la ejecución separados por espacios.
 // Imprime por clog la información de ejecución de los algoritmos.
