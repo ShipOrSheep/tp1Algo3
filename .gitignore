@@ -1,6 +1,8 @@
 # Ignore these files:
 tp1.pdf
 /example
+/experimentacion/instancias
+/experimentacion/.ipynb_checkpoints
 jambotubos
 
 # Ignore vim files
