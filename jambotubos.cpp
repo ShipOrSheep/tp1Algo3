@@ -58,6 +58,8 @@ int BT(int i, int W, int k, int kOptimo, int minR)
 }
 
 //---------------------------------------------------------------------------------
+vector<vector<int>> m; // Matriz para memoria de PD
+
 int DP(int i, int Ractual) // cantElem es la cantidad total de elementos
 {
 	if(Ractual < 0) {return -1;} // si caigo con i == n, pero el peso rompio algun elemento o el jambotubo, tengo que restar el haber sumado el elemento en el paso anterior. Por eso escribo este if antes del siguiente if
