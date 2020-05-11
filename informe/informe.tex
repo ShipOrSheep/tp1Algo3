@@ -65,7 +65,7 @@ En el trabajo práctico presente se nos pide realizar la programación de robots
 Durante el informe desarrollaremos tres técnicas de programación que nos permitirán abordar el problema: Fuerza Bruta(FB), Backtracking(BT), y por último Programación Dinámica(PD).
 
 \section{Fuerza Bruta} \label{sec:fuerza_bruta}
-El algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no, en el caso de Jambo-tubos se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar sin romper el tubo ni los productos apilados.
+El algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no. En nuestro caso, se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, y luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar sin romper nada para cada una de ellas.
 
 \subsection{Implementación y correctitud}
 El algoritmo implementado es recursivo y en cada paso se revisarán dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Esto genera todo el árbol de recursión con todos los casos posibles, o sea todas las ramas completas, siendo sus hojas las posibles soluciones, esto nos garantiza la correctitud del algoritmo. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo sin romper el tubo ni los productos apilados.
