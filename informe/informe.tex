@@ -60,9 +60,9 @@
 \setcounter{page}{1}
 
 \section{Introducción} \label{sec:introduccion}
-En este trabajo práctico trabajamos con Jambo-tubos, este es un servicio de la cadena de supermercados Jambo que cuenta con un robot que tiene como objetivo decidir qué productos de los que llegan por una cinta transportadora serán incluidos en un tubo con la idea de lograr la mayor cantidad de productos entubados. Cada producto llega por la cinta en un orden determinado, y se conoce su peso y resistencia individual, por lo que el robot debe manejar esta información para no romper el tubo ni los productos apilados dentro del mismo por el propio peso de cada uno. \cite{ref:enunciado}
+En el trabajo práctico presente se nos pide realizar la programación de robots pertenecientes a la empresa Jambo, con el fin de optimizar una de las diversas operaciones en sus locales. Particularmente, se nos pide programar un robot que realizará el servicio de empaque de Jambo-tubos. El servicio consiste en un robot que decidirá cuales de los productos de los que le llegan por una cinta transportadora serán empacados en un tubo, con el objetivo de lograr apilar la mayor cantidad de productos. Cada producto llega por la cinta en un orden determinado, y se conoce su peso y resistencia individual, por lo que el robot debe manejar esta información para no romper el tubo ni los productos apilados dentro del mismo por el propio peso de cada uno. \cite{ref:enunciado}
 
-Durante el informe desarrollaremos tres técnicas de programación que nos permitirán abordar el problema de los Jambo-tubos: Fuerza Bruta(FB), Backtracking(BT), y por último Programación Dinámica(PD).
+Durante el informe desarrollaremos tres técnicas de programación que nos permitirán abordar el problema: Fuerza Bruta(FB), Backtracking(BT), y por último Programación Dinámica(PD).
 
 \section{Fuerza Bruta} \label{sec:fuerza_bruta}
 El algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no, en el caso de Jambo-tubos se tendrán en cuenta todas las posibles formas de meter los productos en el tubo, luego se determinará cuál es la cantidad máxima de productos que se pueden ingresar sin romper el tubo ni los productos apilados.
