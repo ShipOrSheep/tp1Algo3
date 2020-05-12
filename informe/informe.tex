@@ -104,10 +104,10 @@ La complejidad del algoritmo es $\theta(2^n)$ para todos los casos, pues en cada
 El resto de las operaciones elementales y comparaciones se realizan en $\theta(1)$.
 
 \section{Backtracking} \label{sec:backtracking}
-Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre el que se aplica la poda lleva a una solución esperada.
+Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre él que se aplica la poda lleva a una solución esperada.
 
 \subsection{Implementación y correctitud}
-En este caso la correctitud es similar a la de Fuerza Bruta ya que el algoritmo sólo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan con un if cada una.
+En este caso la correctitud es similar a la de FB ya que el algoritmo BT \ref{alg:backtracking} sólo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros sobre el algoritmo FB. Se agrega un nuevo parámetro $kOptimo$ respecto a la versión de FB que mantiene el k que maximiza la cantidad de productos sin romper el tubo ni los elementos apilados, y se elimina el parámetro $aplastados$ pues esa funcionalidad se implementa en la poda de factibilidad.
 
 \paragraph{Poda por factibilidad}
 Implementada sobre la idea de evitar continuar con ramas en que la suma de los pesos de los productos en el Jambo-tubo superen la resistencia total del mismo, o rompan alguno de los productos dentro del tubo.
@@ -136,7 +136,8 @@ Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingr
 \end{algorithm}
 
 \subsection{Complejidad}
-La implementación es igual a la del algoritmo de Fuerza Bruta pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo peor caso con complejidad $O(2^n)$ sumado a la complejidad propia de cada poda. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
+La implementación es igual a la del algoritmo de FB pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo peor caso con complejidad $O(2^n)$ sumado a la complejidad propia de cada poda. Sin embargo tiene un mejor caso con complejidad menor resultante de aplicar las podas y evitar recorrer todo el árbol de recursión. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
+%TODO: Falta ver poda de mejor caso
 
 \section{Programación Dinámica} \label{sec:dp}
 La programación dinámica tiene como característica evitar calcular valores que ya fueron computados en pasos siguientes. Por la naturaleza recursiva del problema, podemos tener casos en que un sub-árbol se calcule más de una única vez generando cómputo innecesario. En este método de programación, resolvemos este problema utilizando un diccionario que contenga todos los valores calculados hasta el momento para poder reutilizarlos.
@@ -171,7 +172,7 @@ Sabemos que la matriz tiene una dimensión de $n * R$ que es la cantidad de elem
 
 \section{Experimentación} \label{sec:experimentacion}
 Las experimentaciones tienen como objetivo verificar las complejidades de los diferentes algoritmos ya presentados y codificados en C++, para ello fueron ejecutados en una única PC con las siguientes características:
-%CARACTERISTICAS DE LA PC
+%TODO: Caracteristicas de la PC
 
 \subsection{Instancias}
 Para la experimentación realizamos experimentos sobre cinco datasets que representan tipos de instancia de diferentes características:
