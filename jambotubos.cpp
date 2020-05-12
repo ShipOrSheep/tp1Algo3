@@ -37,13 +37,20 @@ int FB(int i, int W, int k, int minR, bool aplastados)
 //---------------------------------------------------------------------------------
 bool poda_factibilidad = false;
 bool poda_optimalidad = false;
-
+int kOptimo = 0;
 // Version principal
 //Algoritmo BT sin generar vector de elementos
-int BT(int i, int W, int k, int kOptimo, int minR)
+int BT(int i, int W, int k, int minR)
 {
-    // Caso base.    
-    if (i == n) return (W <= R && minR >= 0) ? kOptimo : 0;
+    // Caso base.
+    if (i == n)  {
+        if (W <= R && minR >= 0) {
+            kOptimo = max(kOptimo, k);
+            return k;
+        }else{
+            return 0;
+        }
+    }
 
     // Poda por factibilidad.
     //Si rompe la bolsa o hay aplastados
@@ -51,10 +58,10 @@ int BT(int i, int W, int k, int kOptimo, int minR)
 
     // Poda por optimalidad.
     //Si no es posible superar al optimo
-    if (poda_optimalidad && (kOptimo > (k + n-i-1))) return 0;
+    if (poda_optimalidad && (kOptimo >= (k + n-i-1))) return 0;
 
     // Recursión.
-    return max(BT(i+1, W, k, kOptimo, minR), BT(i+1, W+w[i], k+1, max(kOptimo, k+1), min(minR - w[i], r[i])));
+    return max(BT(i+1, W, k, minR), BT(i+1, W+w[i], k+1, min(minR - w[i], r[i])));
 }
 
 //---------------------------------------------------------------------------------
@@ -115,17 +122,17 @@ int main(int argc, char** argv)
 	{
         poda_factibilidad = true;
         poda_optimalidad = true;
-        res = BT(0, 0, 0, 0, R);
+        res = BT(0, 0, 0, R);
 	}
 	else if (algoritmo == "BT-F")
 	{   
         poda_factibilidad = true;
-        res = BT(0, 0, 0, 0, R);
+        res = BT(0, 0, 0, R);
 	}
 	else if (algoritmo == "BT-O")
 	{   
         poda_optimalidad = true;
-        res = BT(0, 0, 0, 0, R);
+        res = BT(0, 0, 0, R);
 	}
 	else if (algoritmo == "DP")
 	{

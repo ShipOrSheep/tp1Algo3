@@ -16,3 +16,6 @@ jambotubos
 *.log
 *.toc
 informe/informe.pdf
+
+# venv
+/tp1
