@@ -184,41 +184,25 @@ Para la experimentación realizamos experimentos sobre cinco datasets que repres
 	\item dinamica: instancias aleatorias con $n$ y $R$ variable.
 \end{itemize}
 % Comentarios experimentacion:
-% 
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
-%
+% Podemos mencionar que si un paso recursivo tardara 1 nanosegundo, un tubo de 101 elementos tardaria [INSERTAR muchas horas]
+% Eso lo comparamos a n = 800 * R = 1000, y si el paso recursivo tardara 1 nanosegundo, tardaria en tiempo: [INSERTAR menos horas]
+% Eso hace ideal al algoritmo de programacion dinamica para jambotubos muy largos,
+%  pero como estimamos que no se van a usar jambotubos muy largos, usaremos el algoritmo mas rapido para n chico (tal vez sea el mismo de progr. dinamica)
 \subsection{Experimento 1: Fuerza Bruta}
+	En el primer experimento, resolvimos el problema utilizando el método de fuerza bruta. Para probar la hipótesis de que el algoritmo tiene complejidad $\thetaO(2^{n})$ graficamos el tiempo tardado por el algoritmo segun el n, contra la funcion exponencial $2^{n}$, con n la cantidad total de elementos de la instancia del problema. Vamos a utilizar un dataset de instancias del problema que tienen soluciones de valores altos.
+\begin{figure}
+	\includegraphics[width=\linewidth]{../experimentacion/graficos/fb-complejidad.svg}
+	\caption{Fuerza bruta contra función exponencial}
+	\label{fig. 1}
+\end{figure}
+Como se puede ver, el tiempo que tarda el algoritmo está solapado con la función exponencial, respaldando nuestra hipótesis de que efectivamente esa es la complejidad.
+Para demostrar que el tipo de instancias no influye en el tiempo tardado, y que lo único que tiene peso es la cantidad de elementos total, vamos a ejecutar el algoritmo contra un dataset distinto en calidad de tipos de instancias, pero con la misma cantidad de productos totales en la cinta.Este nuevo dataset tendrá instancias de kOptimo alto, en contraste con las de kOptimo bajo del ultimo dataset. Luego las compararemos entre ellas.
+\begin{figure}
+	\includegraphics[width=\linewidth]{../experimentacion/graficos/fb-densidades.svg}
+	\caption{Fuerza bruta datasets densidad alta contra densidad baja}
+	\label{fig. 1}
+\end{figure}
+Podemos ver que, de vuelta, los graficos se solapan. Esto indica que ambos presentan comportamiento exponencial, lo cual explica que el algoritmo de fuerza bruta no discrimina entre tipos de instancias, sino que solo depende de la cantidad total de elementos que vienen por la cinta.
 
 \subsection{Experimento 2: Backtracking}
 
