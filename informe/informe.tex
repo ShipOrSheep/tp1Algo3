@@ -181,7 +181,7 @@ Para la experimentación realizamos experimentos sobre cinco datasets que repres
 	\item densidad-baja: devuelven k bajo, pocos elementos son considerados para ser ingresados en el tubo.
 	\item mejor-caso-BT: no entra ningún elemento en el tubo.
 	\item peor-caso-BT: entran todos los elementos en el tubo.
-	\item dinamica: instancias aleatorias con $n$ y $R$ variable.
+	\item dinamica: instancias con $n$ y $R$ variable, y resistencias individuales aleatorias.
 \end{itemize}
 % Comentarios experimentacion:
 % Podemos mencionar que si un paso recursivo tardara 1 nanosegundo, un tubo de 101 elementos tardaria [INSERTAR muchas horas]
@@ -195,26 +195,26 @@ En el primer experimento, resolvemos el problema utilizando el método de Fuerza
 	\centering
 	\begin{subfigure}{0.3\linewidth}
 		\centering
-		\includegraphics[scale=0.3]{img/fb-complejidad.jpg}
-		\caption{Fuerza bruta contra función exponencial}
+		\includegraphics[scale=0.25]{img/fb-complejidad.jpg}
+		\caption{Tiempo contra función exponencial}
 		\label{fig:fb-complejidad}
 	\end{subfigure}
 
 	\begin{subfigure}{0.3\linewidth}
 		\centering
-		\includegraphics[scale=0.3]{img/fb-densidades.jpg}
-		\caption{Fuerza bruta datasets densidad alta contra densidad baja}
+		\includegraphics[scale=0.25]{img/fb-densidades.jpg}
+		\caption{Densidad alta contra densidad baja}
 		\label{fig:fb-densidad}
 	\end{subfigure}
 
     \begin{subfigure}{0.3\linewidth}
 		\centering
-		\includegraphics[scale=0.3]{img/fb-correlacion.jpg}
-		\caption{Correlación entre el tiempo de ejecución y la complejidad esperada.}
+		\includegraphics[scale=0.25]{img/fb-correlacion.jpg}
+		\caption{Correlación entre tiempo y complejidad.}
 		\label{fig:fb-correlacion}
 	\end{subfigure}
     
-    \caption{Análisis de complejidad del método FB.}
+    \caption{Análisis del método FB.}
 	\label{fig:exp-fb}
 \end{figure}
 
@@ -227,12 +227,45 @@ coeficiente de correlación de Pearson $0.999975$ validando la hipótesis plante
 \subsection{Experimento 2: Backtracking}
 
 \subsection{Experimento 3: Programación Dinámica}
+En este experimento sobre la implementación de Programación Dinámica vamos a intentar verificar la cota de complejidad afirmada en la sección \ref{alg:dinamica}. Para ello vamos a utilizar el dataset que contiene instancias variando $n$ y $R$, con resistencias individuales aleatorias.
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.45\linewidth}
+		\centering
+		\includegraphics[scale=0.4]{img/dp-n.jpg}
+		\caption{Tiempo de ejecución en función de $n$.}
+		\label{fig:dp-n}
+	\end{subfigure}
+	\begin{subfigure}{0.45\linewidth}
+		\centering
+		\includegraphics[scale=0.4]{img/dp-R.jpg}
+		\caption{Tiempo de ejecución en función de $R$.}
+		\label{fig:dp-R}
+	\end{subfigure}
+	\begin{subfigure}{0.45\linewidth}
+		\centering
+		\includegraphics[scale=0.4]{img/dp-heatmap.jpg}
+		\caption{Tiempo de ejecución en función de $n$ y $R$.}
+		\label{fig:dp-NR}
+	\end{subfigure}
+	\begin{subfigure}{0.45\linewidth}
+		\centering
+		\includegraphics[scale=0.4]{img/dp-correlacion.jpg}
+		\caption{Correlación entre tiempo de ejecución y complejidad.}
+		\label{fig:dp-complejidad}
+	\end{subfigure}
+	\caption{Análisis del método PD.}
+	\label{fig:exp-pd}
+\end{figure}
+
+En las figuras \ref{fig:dp-n} y \ref{fig:dp-R} podemos ver como aumenta linealmente el tiempo en función de las variables $n$ y $R$ por separado. En la figura \ref{fig:dp-NR} ambas variables entran en juego juntas dando una mejor idea del crecimiento de tiempo lineal en función de $n$ y $R$ en conjunto.
+Finalmente podemos ver la correlación con la complejidad teórica en la figura \ref{fig:dp-complejidad} dando un coeficiente de Pearson de 0.95519. Esto nos muestra que efectivamente la complejidad teórica $O(n*R)$ mencionada en \ref{alg:dinamica} es la complejidad del algoritmo de Programación Dinámica implementado.
 
 \section{Conclusiones} \label{sec:conclusiones}
 
 \newpage
 
-\bibliographystyle{abbrvnat} % estilo de bibliografia
-\bibliography{referencias} % importa bib
+%\bibliographystyle{abbrvnat} % estilo de bibliografia
+%\bibliography{referencias} % importa bib
 
 \end{document}
