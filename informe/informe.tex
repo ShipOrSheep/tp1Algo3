@@ -10,6 +10,7 @@
 
 % Comandos para referencias
 \usepackage[square,numbers]{natbib}
+\usepackage{url}
 
 % Comandos para Figuras, Graficos, Tikz etc.
 \usepackage{tikz}
@@ -145,16 +146,16 @@ La programación dinámica tiene como característica evitar calcular valores qu
 \subsection{Implementación y correctitud}
 La implementación es recursiva y similar a la de los métodos anteriores, con el agregado de que al momento de hacer el paso recursivo se verifica que no se haya computado ya. Si se calculó, no se entra al paso, sino que se obtiene el valor a través de una matriz de memoización. Los casos base serían: cuando el peso actual aplasta un elemento de abajo o destruye el jambotubo, o cuando se llega al final de la cinta transportadora. \newline 
 La recursión es la misma que en backtracking y fuerza bruta, de forma que esta versión del algoritmo también incurre en un árbol de recursión.
-\paragraph{Memoización}
+\paragraph{Memoización:}
 La estructura de memoización utilizada es una matriz que tiene por tamaño de fila la cantidad total de elementos de la cinta, y por tamaño de columna la resistencia del jambotubo. Cada valor de la matriz corresponde con el máximo número de elementos ingresados en el Jambo-tubo en el paso $i$ con la mínima resistencia resultante de haber metido o no elementos anteriores.
 La memoización se da cuando en distintas ramas de la ejecución del algoritmo, en un paso $i$, se repite el valor de la resistencia acumulada. Un ejemplo de esto puede ser una instancia en donde el segundo elemento es igual en resistencia y peso al tercer elemento. Luego, van a haber una rama en donde no se agregue el segundo elemento y sí el tercero, y va a existir otra rama en donde se haga lo contrario. Como las ramas coinciden en Resistencia acumulada va a entrar en juego la memoización.
 \begin{algorithm}
 	\begin{algorithmic}[1]
 		\Function{$PD$}{$i$, $Ractual$}
 		
-		\If{$Ractual$ < $0$}{\textbf{return} $-1$}\EndIf
+		\If{$Ractual < 0$}{ \textbf{return} $-1$}\EndIf
 
-		\If{$i = n$}{\textbf{return} $0$}\EndIf
+		\If{$i = n$}{ \textbf{return} $0$}\EndIf
 		
 		\If{$m[i][W] == -1$}{$Rproxima = min(Ractual - w[i], r[i])$$m[i][W] \leftarrow max(DP(i+1, Ractual), DP(i+1, Rproxima))$}\EndIf
 		
@@ -218,7 +219,7 @@ En el primer experimento, resolvemos el problema utilizando el método de Fuerza
 	%\label{fig:exp-fb}
 \end{figure}
 
-Como se puede ver en \ref{fig:fb-complejidad}, el tiempo que tarda el algoritmo está solapado con la función exponencial, respaldando nuestra hipótesis de que efectivamente esa es la complejidad.
+Como se puede ver en la figura \ref{fig:fb-complejidad}, el tiempo que tarda el algoritmo está solapado con la función exponencial, respaldando nuestra hipótesis de que efectivamente esa es la complejidad.
 \newpage
 Para demostrar que el tipo de instancias no influye en el tiempo tardado, y que lo único que tiene peso es la cantidad de elementos total, vamos a ejecutar el algoritmo contra un dataset distinto en calidad de tipos de instancias, pero con la misma cantidad de productos totales en la cinta. Este nuevo dataset tendrá instancias de $kOptimo$ alto, en contraste con las de $kOptimo$ bajo del ultimo dataset.
 \newline
@@ -227,11 +228,11 @@ Para demostrar que el tipo de instancias no influye en el tiempo tardado, y que 
 	%\begin{subfigure}{0.3\linewidth}
 	%	\centering
 		\includegraphics[scale=0.35]{img/fb-densidades.jpg}
-		\caption{Densidad alta conra densidad baja}
+		\caption{Densidad alta contra densidad baja}
 		\label{fig:fb-densidad}
 \end{figure}
 \newline
-Podemos ver en \ref{fig:fb-densidad} que los gráficos se solapan. Esto indica que ambos presentan comportamiento exponencial, lo cual explica que el algoritmo de fuerza bruta no discrimina entre tipos de instancias, sino que solo depende de la cantidad total de elementos que vienen por la cinta.
+Podemos ver en la figura \ref{fig:fb-densidad} que los gráficos se solapan. Esto indica que ambos presentan comportamiento exponencial, lo cual explica que el algoritmo de fuerza bruta no discrimina entre tipos de instancias, sino que solo depende de la cantidad total de elementos que vienen por la cinta.
 \newline
 \begin{figure}[h!]
 	\centering
@@ -242,14 +243,15 @@ Podemos ver en \ref{fig:fb-densidad} que los gráficos se solapan. Esto indica q
 		\label{fig:fb-correlacion}
 \end{figure}
 \newline
-La curva de los gráficos analizados muestran una correlación muy cercana a la función a comparar que es $2^{n}$. Esto lo podemos confirmar en \ref{fig:fb-correlacion} con el
-coeficiente de correlación de Pearson $0.999975$ validando la hipótesis planteada de que la complejidad es efectivamente $\theta(2^n)$.
+La curva de los gráficos analizados muestran una correlación muy cercana a la función a comparar que es $2^{n}$. Esto lo podemos confirmar en la figura \ref{fig:fb-correlacion} con el
+coeficiente de correlación de Pearson\cite{ref:pearson} de $0.999975$ validando la hipótesis planteada de que la complejidad es efectivamente $\theta(2^n)$.
 % ---------------------------------------------------------------------------------------------
 % Hago una newpage asi entran los graficos y el texto juntos
 \newpage
 % ---------------------------------------------------------------------------------------------
 \subsection{Experimento 2: Backtracking}
 \newpage
+
 \subsection{Experimento 3: Programación Dinámica}
 En este experimento sobre la implementación de Programación Dinámica vamos a intentar verificar la cota de complejidad afirmada en la sección \ref{alg:dinamica}. Para ello vamos a utilizar el dataset que contiene instancias variando $n$ y $R$, con resistencias individuales aleatorias.
 \newline
@@ -292,7 +294,7 @@ En las figuras \ref{fig:dp-n} y \ref{fig:dp-R} podemos ver como aumenta linealme
 	\label{fig:dp-complejidad}
 \end{figure}
 \newline
-Finalmente podemos ver la correlación con la complejidad teórica en la figura \ref{fig:dp-complejidad} dando un coeficiente de Pearson de 0.95519. Esto nos muestra que efectivamente la complejidad teórica $O(n*R)$ mencionada en la sección \ref{alg:dinamica} es la complejidad del algoritmo de Programación Dinámica implementado.
+Finalmente podemos ver la correlación con la complejidad teórica en la figura \ref{fig:dp-complejidad} dando un coeficiente de Pearson\cite{ref:pearson} de 0.95519. Esto nos muestra que efectivamente la complejidad teórica $O(n*R)$ mencionada en la sección \ref{alg:dinamica} es la complejidad del algoritmo de Programación Dinámica implementado.
 % ---------------------------------------------------------------------------------------------
 % Hago una newpage asi entran los graficos y el texto juntos
 \newpage
