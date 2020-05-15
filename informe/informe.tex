@@ -191,29 +191,30 @@ Para la experimentación realizamos experimentos sobre cinco datasets que repres
 % -----------------------------------------------------------
 \subsection{Experimento 1: Fuerza Bruta}
 En el primer experimento, resolvemos el problema utilizando el método de Fuerza Bruta ya introducido en la sección \ref{alg:fuerza_bruta}. Para probar la hipótesis de que el algoritmo tiene complejidad $\theta(2^{n})$ graficamos en la figura \ref{fig:fb-complejidad} el tiempo tardado por el algoritmo según el $n$ contra la función exponencial $2^{n}$, con $n$ la cantidad total de elementos de la instancia del problema. Vamos a utilizar un dataset de instancias del problema que tienen soluciones de valores $k$ altos.
+\newline
 
 \begin{figure}[h!]
 	\centering
-	\begin{subfigure}{0.3\linewidth}
+	\begin{subfigure}{\textwidth}
 		\centering
-		\includegraphics[scale=0.35]{img/fb-complejidad.jpg}
+		\includegraphics[width=0.22\linewidth]{img/fb-complejidad.jpg}
 		\caption{Tiempo contra función exponencial}
 		\label{fig:fb-complejidad}
 	\end{subfigure}
 
-	\begin{subfigure}{0.3\linewidth}
+	\begin{subfigure}{\textwidth}
 		\centering
-		\includegraphics[scale=0.25]{img/fb-densidades.jpg}
+		\includegraphics[width=0.22\linewidth]{img/fb-densidades.jpg}
 		\caption{Densidad alta contra densidad baja}
 		\label{fig:fb-densidad}
 	\end{subfigure}
 
-    \begin{subfigure}{0.3\linewidth}
-		\centering
-		\includegraphics[scale=0.25]{img/fb-correlacion.jpg}
-		\caption{Correlación entre tiempo y complejidad.}
-		\label{fig:fb-correlacion}
-	\end{subfigure}
+    %\begin{subfigure}[b]{0.30\textwidth}
+	%	\centering
+	%	\includegraphics[width=\linewidth]{img/fb-correlacion.jpg}
+	%	\caption{Correlación entre tiempo y complejidad.}
+	%	\label{fig:fb-correlacion}
+	%\end{subfigure}
     
     \caption{Análisis del método FB.}
 	\label{fig:exp-fb}
