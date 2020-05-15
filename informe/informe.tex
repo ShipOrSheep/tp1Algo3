@@ -253,13 +253,13 @@ coeficiente de correlación de Pearson\cite{ref:pearson} de $0.999975$ validando
 Nuestra hipótesis es que el método de backtracking tiene complejidad de peor caso exponencial. Utilizando el dataset de peor caso para la poda de factibilidad, graficamos las instancias de ejecución del algoritmo contra una funcion exponencial.
 \newline
 \begin{figure}[h!]
-\begin{subfigure}{0.3\linewidth}
+\begin{subfigure}{0.4\linewidth}
 	\centering
 		\includegraphics[scale=0.30]{img/bt-complejidad-peor-caso.jpg}
 		\caption{Análisis de complejidad BT-F peor caso}
 		\label{fig:bt-complejidad-pero-caso}
 \end{subfigure}
-\begin{subfigure}{0.3\linewidth}
+\begin{subfigure}{0.4\linewidth}
 	\centering
 		\includegraphics[scale=0.30]{img/bt-correlacion-peor-caso.jpg}
 		\caption{Análisis de coeficiente de Pearson BT-F peor caso}
@@ -272,13 +272,13 @@ Del gráfico \ref{fig:bt-correlacion-peor-caso}, obtenemos que el coeficiente de
 Otra hipótesis que tenemos, es que la complejidad en mejor caso de la poda por factibilidad es lineal, pues si ningún elemento puede ser metido en el jambotubo sin romperlo, luego sólo recorro la cinta una única vez. Utilizando un dataset de mejor caso para la poda mencionada, la graficamos contra una función lineal.
 \newline
 \begin{figure}[h!]
-\begin{subfigure}{0.3\linewidth}
+\begin{subfigure}{0.4\linewidth}
 	\centering
 		\includegraphics[scale=0.30]{img/bt-complejidad-mejor-caso.jpg}
 		\caption{Análisis de complejidad backtracking BT-F mejor caso}
 		\label{fig:bt-complejidad-mejor-caso}
 \end{subfigure}
-\begin{subfigure}{0.3\linewidth}
+\begin{subfigure}{0.4\linewidth}
 	\centering
 		\includegraphics[scale=0.30]{img/bt-correlacion-mejor-caso.jpg}
 		\caption{Análisis de correlación backtracking BT-F mejor caso}
@@ -294,13 +294,13 @@ La correlación da el valor \ref{fig:bt-correlacion-mejor-caso}, respaldando nue
 	\centering
 	\begin{subfigure}{0.45\linewidth}
 		\centering
-		\includegraphics[scale=0.4]{img/bt-podas-alta.jpg}
+		\includegraphics[scale=0.3]{img/bt-podas-alta.jpg}
 		\caption{Análisis de podas con densidad alta, $k$ alto.}
 		\label{fig:bt-poda-alto}
 	\end{subfigure}
 	\begin{subfigure}{0.45\linewidth}
 		\centering
-		\includegraphics[scale=0.4]{img/bt-podas-baja.jpg}
+		\includegraphics[scale=0.3]{img/bt-podas-baja.jpg}
 		\caption{Análisis de podas con densidad baja, $k$ bajo.}
 		\label{fig:bt-poda-bajo}
 	\end{subfigure}
