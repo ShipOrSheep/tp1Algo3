@@ -189,7 +189,7 @@ Para la experimentación realizamos experimentos sobre cinco datasets que repres
 % Eso hace ideal al algoritmo de programacion dinamica para jambotubos muy largos,
 %  pero como estimamos que no se van a usar jambotubos muy largos, usaremos el algoritmo mas rapido para n chico (tal vez sea el mismo de progr. dinamica)
 \subsection{Experimento 1: Fuerza Bruta}
-En el primer experimento, resolvemos el problema utilizando el método de Fuerza Bruta ya introducido en la sección \ref{alg:fuerza_bruta}. Para probar la hipótesis de que el algoritmo tiene complejidad $\theta(2^{n})$ graficamos (\ref{fig:fb-complejidad}) el tiempo tardado por el algoritmo según el $n$ contra la función exponencial $2^{n}$, con $n$ la cantidad total de elementos de la instancia del problema. Vamos a utilizar un dataset de instancias del problema que tienen soluciones de valores $k$ altos.
+En el primer experimento, resolvemos el problema utilizando el método de Fuerza Bruta ya introducido en la sección \ref{alg:fuerza_bruta}. Para probar la hipótesis de que el algoritmo tiene complejidad $\theta(2^{n})$ graficamos en la figura \ref{fig:fb-complejidad} el tiempo tardado por el algoritmo según el $n$ contra la función exponencial $2^{n}$, con $n$ la cantidad total de elementos de la instancia del problema. Vamos a utilizar un dataset de instancias del problema que tienen soluciones de valores $k$ altos.
 
 \begin{figure}[h!]
 	\centering
@@ -243,7 +243,7 @@ Podemos ver en la figura \ref{fig:fb-densidad} que los gráficos se solapan. Est
 \end{figure}
 \newline
 La curva de los gráficos analizados muestran una correlación muy cercana a la función a comparar que es $2^{n}$. Esto lo podemos confirmar en la figura \ref{fig:fb-correlacion} con el
-coeficiente de correlación de Pearson\cite{ref:pearson} de $0.999975$ validando la hipótesis planteada de que la complejidad es efectivamente $\theta(2^n)$. Argumentamos que no hay una correlación del 1.00 por factores externos en las distintas ejecuciones de los experimentos: por ejemplo, el scheduler y/o swappign a disco.
+coeficiente de correlación de Pearson\cite{ref:pearson} de $0.999975$ validando la hipótesis planteada de que la complejidad es efectivamente $\theta(2^n)$. Argumentamos que no hay una correlación del 1.00 por factores externos en las distintas ejecuciones de los experimentos: por ejemplo, el scheduler y/o swapping a disco.
 % ---------------------------------------------------------------------------------------------
 % Hago una newpage asi entran los graficos y el texto juntos
 \newpage
@@ -269,7 +269,7 @@ coeficiente de correlación de Pearson\cite{ref:pearson} de $0.999975$ validando
 En este experimento buscamos comparar la efectividad de la aplicación de las podas de factibilidad y optimalidad del algoritmo de BT. Para ello utilizamos los datasets de densidad alta y baja enunciados en la sección \ref{instancias}. La hipótesis es que si tenemos un $k$ óptimo alto (alta densidad) entonces la poda de optimalidad entra en efecto filtrando la mayoría de las ramas, dado que es más probable que exista una rama que no llegue a alcanzar ese $k$ incluso contando todos los elementos restantes. En cambio si tenemos un $k$ óptimo bajo la poda de factibilidad toma mayor importancia al filtrar las ramas que superen el peso o la resistencia individual de alguno de los elementos, dado que es más dificil asegurar que los elementos restantes no superen el $k$ óptimo.
 
 Podemos ver en la figura \ref{fig:bt-poda-alto} que en una instancia de densidad alta efectivamente la poda de optimalidad mantiene mejor complejidad temporal que la de factibilidad. También podemos observar en la figura \ref{fig:bt-poda-bajo} que en una instancia de baja densidad la poda que toma mejor complejidad temporal es la poda de factibilidad, corroborando la hipótesis sobre la efectividad de las podas.
-Teniendo en cuenta las caracteristicas de estas podas, no es errado decir que la versión de backtracking que implementa ambas (en el gráfico, BT, en azul) posee la ventajas de las dos y ninguna de sus inconveniencias.
+Teniendo en cuenta las características de estas podas, no es errado decir que la versión de Backtracking que implementa ambas (en el gráfico, BT, en azul) posee la ventajas de las dos y ninguna de sus inconveniencias.
 
 \newpage
 
@@ -322,10 +322,10 @@ Finalmente podemos ver la correlación con la complejidad teórica en la figura 
 % ---------------------------------------------------------------------------------------------
 
 \section{Conclusiones} \label{sec:conclusiones}
-Resolvimos el problema de los jambotubos utilizando 3 tipos distintos de algoritmos.
+Resolvimos el problema de los Jambo-tubos utilizando 3 tipos distintos de algoritmos.
 Pudimos ver que el método de fuerza bruta no es viable en ninguna situación, pues tardará tiempo exponencial para cualquier instancia.
-El método de backtracking mejora al método de fuerza bruta, y vimos que ambas podas poseen puntos débiles y fuertes. Pero también vimos que al combinarlas, se tienen todos los beneficios y ninguna de las inconveniencias.
-El método de programación dinámica se comporta muy bien con n grande, y como los productos de los jambotubos no serán muy pesados en una situación real, por ende la resistencia no será muy alta y la complejidad del algoritmo no crecerá mucho con R. Esto lo hace el método ideal para utilizar en los robots.
+El método de Backtracking mejora al método de fuerza bruta, y vimos que ambas podas poseen puntos débiles y fuertes. Pero también vimos que al combinarlas, se tienen todos los beneficios y ninguna de las inconveniencias.
+El método de programación dinámica se comporta muy bien con n grande, y como los productos de los Jambo-tubos no serán muy pesados en una situación real, por ende la resistencia no será muy alta y la complejidad del algoritmo no crecerá mucho con R. Esto lo hace el método ideal para utilizar en los robots.
 
 \newpage
 \nocite{*}
