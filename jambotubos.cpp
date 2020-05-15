@@ -67,10 +67,12 @@ int BT(int i, int W, int k, int minR)
 //---------------------------------------------------------------------------------
 vector<vector<int>> m; // Matriz para memoria de PD
 
-int DP(int i, int Ractual) // cantElem es la cantidad total de elementos
+int DP(int i, int Ractual)
 {
-	if(Ractual < 0) {return -1;} // si caigo con i == n, pero el peso rompio algun elemento o el jambotubo, tengo que restar el haber sumado el elemento en el paso anterior. Por eso escribo este if antes del siguiente if
-	if (i == n ) {return 0;} // Estoy seguro de que no rompi ningun objeto, asi que no resto lo que sume antes (ademas de que si no lo hago asi, el caso en que no hay ningun objeto posible devolveria -1, un horror)
+	if (Ractual < 0) {return -1;} // Si se rompe el tubo o algun elemento devuelvo -1, pues debo terminar y restarlo al contador de PD.
+	
+	if (i == n ) {return 0;} // Caso base en el que no se rompe ningun objeto.
+	
 	if (m[i][Ractual] == -1) {
 	    int Rproximo = min(Ractual-w[i], r[i]);
         m[i][Ractual] = max(DP(i+1, Ractual), 1 + DP(i+1, Rproximo));
