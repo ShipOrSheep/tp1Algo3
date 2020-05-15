@@ -270,6 +270,7 @@ coeficiente de correlación de Pearson\cite{ref:pearson} de $0.999975$ validando
 En este experimento buscamos comparar la efectividad de la aplicación de las podas de factibilidad y optimalidad del algoritmo de BT. Para ello utilizamos los datasets de densidad alta y baja enunciados en la sección \ref{instancias}. La hipótesis es que si tenemos un $k$ óptimo alto (alta densidad) entonces la poda de optimalidad entra en efecto filtrando la mayoría de las ramas, dado que es más probable que exista una rama que no llegue a alcanzar ese $k$ incluso contando todos los elementos restantes. En cambio si tenemos un $k$ óptimo bajo la poda de factibilidad toma mayor importancia al filtrar las ramas que superen el peso o la resistencia individual de alguno de los elementos, dado que es más dificil asegurar que los elementos restantes no superen el $k$ óptimo.
 
 Podemos ver en la figura \ref{fig:bt-poda-alto} que en una instancia de densidad alta efectivamente la poda de optimalidad mantiene mejor complejidad temporal que la de factibilidad. También podemos observar en la figura \ref{fig:bt-poda-bajo} que en una instancia de baja densidad la poda que toma mejor complejidad temporal es la poda de factibilidad, corroborando la hipótesis sobre la efectividad de las podas.
+Teniendo en cuenta las caracteristicas de estas podas, no es errado decir que la versión de backtracking que implementa ambas (en el gráfico, BT, en azul) posee la ventajas de las dos y ninguna de sus inconveniencias.
 
 \newpage
 
