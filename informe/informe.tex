@@ -195,27 +195,24 @@ En el primer experimento, resolvemos el problema utilizando el método de Fuerza
 
 \begin{figure}[h!]
 	\centering
-	\begin{subfigure}{\textwidth}
+	\begin{subfigure}{0.4\linewidth}
 		\centering
-		\includegraphics[width=0.22\linewidth]{img/fb-complejidad.jpg}
+		\includegraphics[scale=0.3]{img/fb-complejidad.jpg}
 		\caption{Tiempo contra función exponencial}
 		\label{fig:fb-complejidad}
 	\end{subfigure}
-
-	\begin{subfigure}{\textwidth}
+	\begin{subfigure}{0.4\linewidth}
 		\centering
-		\includegraphics[width=0.22\linewidth]{img/fb-densidades.jpg}
+		\includegraphics[scale=0.3]{img/fb-densidades.jpg}
 		\caption{Densidad alta contra densidad baja}
 		\label{fig:fb-densidad}
 	\end{subfigure}
-
     %\begin{subfigure}[b]{0.30\textwidth}
 	%	\centering
 	%	\includegraphics[width=\linewidth]{img/fb-correlacion.jpg}
 	%	\caption{Correlación entre tiempo y complejidad.}
 	%	\label{fig:fb-correlacion}
 	%\end{subfigure}
-    
     \caption{Análisis del método FB.}
 	\label{fig:exp-fb}
 \end{figure}
@@ -235,14 +232,15 @@ Para demostrar que el tipo de instancias no influye en el tiempo tardado, y que 
 \newline
 Podemos ver en la figura \ref{fig:fb-densidad} que los gráficos se solapan. Esto indica que ambos presentan comportamiento exponencial, lo cual explica que el algoritmo de fuerza bruta no discrimina entre tipos de instancias, sino que solo depende de la cantidad total de elementos que vienen por la cinta.
 \newline
-%\begin{figure}[h!]
-%	\centering
-	%\begin{subfigure}{0.3\linewidth}
-	%	\centering
-%		\includegraphics[scale=0.35]{img/fb-correlacion.jpg}
-%		\caption{Correlación entre tiempo y complejidad}
-%		\label{fig:fb-correlacion}
-%\end{figure}
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}{0.4\linewidth}
+		\centering
+			\includegraphics[scale=0.3]{img/fb-correlacion.jpg}
+			\caption{Correlación entre tiempo y complejidad}
+			\label{fig:fb-correlacion}
+	\end{subfigure}	
+\end{figure}
 \newline
 La curva de los gráficos analizados muestran una correlación muy cercana a la función a comparar que es $2^{n}$. Esto lo podemos confirmar en la figura \ref{fig:fb-correlacion} con el
 coeficiente de correlación de Pearson\cite{ref:pearson} de $0.999975$ validando la hipótesis planteada de que la complejidad es efectivamente $\theta(2^n)$. Argumentamos que no hay una correlación del 1.00 por factores externos en las distintas ejecuciones de los experimentos: por ejemplo, el scheduler y/o swapping a disco.
