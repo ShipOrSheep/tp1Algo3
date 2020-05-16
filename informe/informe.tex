@@ -358,28 +358,32 @@ En las figuras \ref{fig:dp-n} y \ref{fig:dp-R} podemos ver como aumenta linealme
 Finalmente podemos ver la correlación con la complejidad teórica en la figura \ref{fig:dp-complejidad} dando un coeficiente de Pearson\cite{ref:pearson} de 0.95519. Esto nos muestra que efectivamente la complejidad teórica $O(n*R)$ mencionada en la sección \ref{alg:dinamica} es la complejidad del algoritmo de Programación Dinámica implementado.
 % ---------------------------------------------------------------------------------------------
 \subsection{Experimento 4: Comparación BT vs PD}
-Comparamos los tiempos de ejecución de backtracking completo (usando ambas podas) versus el algoritmo de programación dinámica en dos datasets distintos: con densidad alta, y con densidad baja.
+Comparamos los tiempos de ejecución de Backtracking completo (usando ambas podas) versus el algoritmo de Programación Dinámica en dos datasets distintos: con densidad alta, y con densidad baja. La hipótesis es que en instancias en que se encuentra un $k$ óptimo alto (se tienen en cuenta más elementos) podemos obtener mejores resultados utilizando BT puesto que se aplicarán las podas, especialmente la de optimalidad.
 \begin{figure}[h!]
 	\centering
-	\begin{subfigure}{0.30\linewidth}
+	\begin{subfigure}{0.4\linewidth}
 		\centering
-		\includegraphics[scale=0.26]{img/comparacion-bt-dp-alta.jpg}
-		\caption{Comparación utilizando dataset de densidad alta}
+		\includegraphics[scale=0.3]{img/comparacion-bt-dp-alta.jpg}
+		\caption{BT vs PD en instancia de densidad alta}
 		\label{fig:comparacion-bt-dp-alta}
 	\end{subfigure}
-	\begin{subfigure}{0.30\linewidth}
+	\begin{subfigure}{0.4\linewidth}
 		\centering
-		\includegraphics[scale=0.26]{img/comparacion-bt-dp-baja.jpg}
-		\caption{Comparación utilizando dataset de densidad baja}
+		\includegraphics[scale=0.3]{img/comparacion-bt-dp-baja.jpg}
+		\caption{BT vs PD en instancia de densidad baja}
 		\label{fig:comparacion-bt-dp-baja}
 	\end{subfigure}
-	\caption{Análisis de PD contra BT-FO}
+	\caption{Análisis de PD contra BT}
 	\label{fig:bt-vs-pd}
 \end{figure}
-Podemos apreciar en la figura \ref{fig:comparacion-bt-dp-alta} que el algoritmo de programación dinámica no se comporta el mejor entre los dos en el caso en que las instancias posean un kOptimo alto.
+Podemos apreciar en la figura \ref{fig:comparacion-bt-dp-alta} que el algoritmo de Programación Dinámica no se comporta mejor en el caso en que las instancias posean un $k$ óptimo alto, suponemos que la causa es que la poda de optimalidad filtra la mayoría de las ramas del árbol de recursión.
+%, y que la cantidad de estados guardados en la matriz de PD es mayor?
 % ¿Se puede explicar por qué triggerea esto al peor caso de DP?
-En cambio, en la figura \ref{fig:comparacion-bt-dp-baja} sucede lo contrario: PD performa mejor que BT a medida que aumenta la cantidad de elementos que vienen por la cinta transportadora.
+En cambio, en la figura \ref{fig:comparacion-bt-dp-baja} sucede lo contrario: PD performa mejor que BT a medida que aumenta la cantidad de elementos que vienen por la cinta transportadora, puesto que la poda de optimalidad ya no influye como antes.
+%, y la cantidad de estados de la matriz de PD es menor?
 % ¿Por qué puede suceder esto?
+
+En este experimento utilizamos dos instancias con características definidas que son la instancias de densidad alta y baja. La hipótesis es que en instancias en que se encuentra un $k$ óptimo alto (se tienen en cuenta más elementos) podemos obtener mejores resultados utilizando BT puesto que se aplicarán las podas, mientras que en PD se debe guardar en memoria más estados del programa al considerar muchos elementos. Por otro lado para instancias de densidad baja (se tienen en cuenta pocos elementos) vemos el efecto contrario, las podas ya no son tan efectivas en BT, y en PD los estados a guardar en la matriz son menores en cantidad.
 
 % ---------------------------------------------------------------------------------------------
 % Hago una newpage asi entran los graficos y el texto juntos
