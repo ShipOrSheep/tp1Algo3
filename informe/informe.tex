@@ -357,6 +357,31 @@ En las figuras \ref{fig:dp-n} y \ref{fig:dp-R} podemos ver como aumenta linealme
 \newline
 Finalmente podemos ver la correlación con la complejidad teórica en la figura \ref{fig:dp-complejidad} dando un coeficiente de Pearson\cite{ref:pearson} de 0.95519. Esto nos muestra que efectivamente la complejidad teórica $O(n*R)$ mencionada en la sección \ref{alg:dinamica} es la complejidad del algoritmo de Programación Dinámica implementado.
 % ---------------------------------------------------------------------------------------------
+\subsection{Experimento 4: Comparación BT vs PD}
+Comparamos los tiempos de ejecución de backtracking completo (usando ambas podas) versus el algoritmo de programación dinámica en dos datasets distintos: con densidad alta, y con densidad baja.
+\begin{figure}[h!]
+	\centering
+	\begin{subfigure}{0.30\linewidth}
+		\centering
+		\includegraphics[scale=0.26]{img/comparacion-bt-dp-alta.jpg}
+		\caption{Comparación utilizando dataset de densidad alta}
+		\label{fig:comparacion-bt-dp-alta}
+	\end{subfigure}
+	\begin{subfigure}{0.30\linewidth}
+		\centering
+		\includegraphics[scale=0.26]{img/comparacion-bt-dp-baja.jpg}
+		\caption{Comparación utilizando dataset de densidad baja}
+		\label{fig:comparacion-bt-dp-baja}
+	\end{subfigure}
+	\caption{Análisis de PD contra BT-FO}
+	\label{fig:bt-vs-pd}
+\end{figure}
+Podemos apreciar en la figura \ref{fig:comparacion-bt-dp-alta} que el algoritmo de programación dinámica no se comporta el mejor entre los dos en el caso en que las instancias posean un kOptimo alto.
+% ¿Se puede explicar por qué triggerea esto al peor caso de DP?
+En cambio, en la figura \ref{fig:comparacion-bt-dp-baja} sucede lo contrario: PD performa mejor que BT a medida que aumenta la cantidad de elementos que vienen por la cinta transportadora.
+% ¿Por qué puede suceder esto?
+
+% ---------------------------------------------------------------------------------------------
 % Hago una newpage asi entran los graficos y el texto juntos
 \newpage
 % ---------------------------------------------------------------------------------------------
