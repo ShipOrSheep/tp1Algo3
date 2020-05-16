@@ -357,7 +357,7 @@ En las figuras \ref{fig:dp-n} y \ref{fig:dp-R} podemos ver como aumenta linealme
 	\label{fig:dp-complejidad}
 \end{figure}
 \newline
-Finalmente podemos ver la correlación con la complejidad teórica en la figura \ref{fig:dp-complejidad} dando un coeficiente de Pearson\cite{ref:pearson} de 0.95519. Esto nos muestra que efectivamente la complejidad teórica $O(n*R)$ mencionada en la sección \ref{alg:dinamica} es la complejidad del algoritmo de Programación Dinámica implementado.
+Finalmente podemos ver la correlación con la complejidad teórica en la figura \ref{fig:dp-complejidad} dando un coeficiente de Pearson\cite{ref:pearson} de 0.95519. Esto respalda nuestra hipótesis de que efectivamente la complejidad teórica $O(n*R)$ mencionada en la sección \ref{alg:dinamica} es la complejidad del algoritmo de Programación Dinámica implementado.
 % ---------------------------------------------------------------------------------------------
 \subsection{Experimento 4: Comparación BT vs PD}
 Comparamos los tiempos de ejecución de Backtracking completo (usando ambas podas) versus el algoritmo de Programación Dinámica en dos datasets distintos: con densidad alta, y con densidad baja. La hipótesis es que en instancias en que se encuentra un $k$ óptimo alto (se tienen en cuenta más elementos) podemos obtener mejores resultados utilizando BT puesto que se aplicarán las podas, especialmente la de optimalidad.
