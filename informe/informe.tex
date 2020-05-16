@@ -105,7 +105,7 @@ La complejidad del algoritmo es $\theta(2^n)$ para todos los casos, pues en cada
 El resto de las operaciones elementales y comparaciones se realizan en $\theta(1)$.
 
 \section{Backtracking} \label{sec:backtracking}
-Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre él que se aplica la poda lleva a una solución esperada.
+Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre el cual se aplica la poda llevará a una solución esperada.
 
 \subsection{Implementación y correctitud}
 En este caso la correctitud es similar a la de FB ya que el algoritmo BT \ref{alg:backtracking} sólo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros sobre el algoritmo FB. Se agrega un nuevo parámetro $kOptimo$ respecto a la versión de FB que mantiene el k que maximiza la cantidad de productos sin romper el tubo ni los elementos apilados, y se elimina el parámetro $aplastados$ pues esa funcionalidad se implementa en la poda de factibilidad.
@@ -219,7 +219,7 @@ En el primer experimento, resolvemos el problema utilizando el método de Fuerza
 
 Como se puede ver en la figura \ref{fig:fb-complejidad}, el tiempo que tarda el algoritmo está solapado con la función exponencial, respaldando nuestra hipótesis de que efectivamente esa es la complejidad.
 \newline
-Para demostrar que el tipo de instancias no influye en el tiempo tardado, y que lo único que tiene peso es la cantidad de elementos total, vamos a ejecutar el algoritmo contra un dataset distinto en calidad de tipos de instancias, pero con la misma cantidad de productos totales en la cinta. Este nuevo dataset tendrá instancias de $kOptimo$ alto, en contraste con las de $kOptimo$ bajo del ultimo dataset.
+Para demostrar que el tipo de instancias no influye en el tiempo tardado, y que lo único que tiene peso es la cantidad de elementos total, ejecutamos el algoritmo contra un dataset distinto en calidad de tipos de instancias, pero con la misma cantidad de productos totales en la cinta. Este nuevo dataset tendrá instancias de $kOptimo$ alto, en contraste con las de $kOptimo$ bajo del ultimo dataset.
 \newline
 %\begin{figure}[h!]
 %	\centering
