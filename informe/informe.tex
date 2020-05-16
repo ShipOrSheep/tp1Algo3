@@ -183,6 +183,8 @@ Para la experimentación realizamos experimentos sobre cinco datasets que repres
 	\item peor-caso-BT: entran todos los elementos en el tubo.
 	\item dinamica: instancias con $n$ y $R$ variable, y resistencias individuales aleatorias.
 \end{itemize}
+Es necesario hacer algunas aclaraciones: cuando escribamos BT-F, nos referiremos a el método de backtracking por poda de factibilidad. Idem BT-O por poda de factibilidad. Y cuando usemos BT a secas, si no se indica lo contrario, estaremos usando ambas podas al mismo tiempo.\newline
+Además argumentamos que el dataset mejor-caso-BT es mejor caso sólo para BT-F, y lo mismo sucede con peor-caso-BT y BT-O. Ahora, mejor-caso-BT será un dataset de peor caso para BT-O, y peor-caso-BT será una instancia de peor caso para BT-F.
 % Comentarios experimentacion:
 % Podemos mencionar que si un paso recursivo tardara 1 nanosegundo, un tubo de 101 elementos tardaria [INSERTAR muchas horas]
 % Eso lo comparamos a n = 800 * R = 1000, y si el paso recursivo tardara 1 nanosegundo, tardaria en tiempo: [INSERTAR menos horas]
