@@ -71,9 +71,9 @@ En el informe desarrollamos tres técnicas de programación que nos permiten abo
 El algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no. En nuestro caso, se tienen en cuenta todas las posibles formas de ingresar los productos en el tubo, y luego se determina cuál es la cantidad máxima de productos que se pueden ingresar sin romper ninguno de los productos apilados. Podemos observar que en todos los casos se revisan la totalidad del conjunto de soluciones para después determinar la solución óptima por lo que no podemos distinguir mejor y peor caso.
 
 \subsection{Implementación y correctitud}
-El algoritmo implementado es recursivo y en cada paso se revisan dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Se genera el árbol de recursión con todos los casos posibles agregando un elemento por vez, o sea se desarrollan todas las ramas completas siendo sus hojas las posibles soluciones. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo sin romper el tubo ni los productos apilados, esto nos garantiza la correctitud del algoritmo.
+El algoritmo implementado es recursivo y en cada paso se revisan dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Se genera el árbol de recursión con todos los casos posibles agregando un elemento por vez, o sea se desarrollan todas las ramas completas siendo sus hojas las posibles soluciones. Finalmente basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo sin romper el tubo ni los productos apilados, esto junto con el árbol de recursión completo nos garantiza la correctitud del algoritmo.
 
-Para saber si se rompe algún producto dentro del Jambo-tubo guardamos en la variable $minR$ la mínima resistencia restante entre los productos \ref{alg:fuerza_bruta}, para ello calculamos en cada paso el mínimo entre el nuevo producto agregado y la diferencia entre la resistencia mínima restante y el peso del nuevo producto. De esta forma siempre estamos verificando que el producto de menor resistencia restante no se rompa, asegurando el estado del resto de los productos de mayor resistencia. Si se rompe el elemento de menor resistencia restante luego ya sabemos que ese caso no es solución. Al tener en cuenta en $minR$ la resistencia del Jambo-tubo estamos cubriendo también el caso en que este se rompe.
+Para saber si se rompe algún producto dentro del Jambo-tubo guardamos en la variable $minR$ la mínima resistencia restante entre los productos \ref{alg:fuerza_bruta}, para ello calculamos en cada paso el mínimo entre el nuevo producto agregado y la diferencia entre la resistencia mínima restante y el peso del nuevo producto. De esta forma siempre estamos verificando que el producto de menor resistencia restante no se rompa, asegurando el estado del resto de los productos de mayor resistencia. Si se rompe el elemento de menor resistencia restante luego ya sabemos que ese caso no es solución. Al tener en cuenta en $minR$ la resistencia del Jambo-tubo al inicializar el algoritmo con $minR = R$, estamos cubriendo también el caso en que este se rompe.
 
 Los parámetros que recibe la función \ref{alg:fuerza_bruta} son:
 \begin{itemize}
@@ -107,10 +107,10 @@ La complejidad del algoritmo es $\theta(2^n)$ para todos los casos, pues en cada
 El resto de las operaciones elementales y comparaciones se realizan en $\theta(1)$.
 
 \section{Backtracking} \label{sec:backtracking}
-Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una implementación de podas que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que no lleve a una solución óptima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre el cual se aplica la poda llevará a una solución válida u óptima.
+Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una implementación de podas que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que no lleve a una solución óptima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre el cual se aplica la poda llevará a una solución válida u óptima, puesto que en cada paso se agregan productos luego no es posible que una solución actual filtrada pase a ser válida en posteriores pasos.
 
 \subsection{Implementación y correctitud}
-En este caso la correctitud es similar a la de FB ya que el algoritmo BT \ref{alg:backtracking} sólo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros sobre el algoritmo FB. Se agrega un nueva variable global $kOptimo$ respecto a la versión de FB que mantiene el $k$ que maximiza la cantidad de productos sin romper el tubo ni los elementos apilados, y se elimina el parámetro $aplastados$ pues esa funcionalidad se implementa en la poda de factibilidad.
+En este caso la correctitud se garantiza de forma similar a la de FB ya que el algoritmo BT \ref{alg:backtracking} sólo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros sobre el algoritmo FB. Se agrega un nueva variable global $kOptimo$ respecto a la versión de FB que mantiene el $k$ que maximiza la cantidad de productos sin romper el tubo ni los elementos apilados, y se elimina el parámetro $aplastados$ pues esa funcionalidad se implementa en la poda de factibilidad. 
 
 \paragraph{Poda por factibilidad}
 Implementada sobre la idea de evitar continuar con ramas en que la suma de los pesos de los productos en el Jambo-tubo superen la resistencia total del mismo, o rompan alguno de los productos dentro del tubo.
@@ -133,7 +133,7 @@ Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingr
 		
 		\If{$poda\_factibilidad$ $\land$ $(W > R$ $||$ $minR < 0)$}{ \textbf{return} $0$}\EndIf
 		
-		\If{$poda\_optimalidad$ $\land$ $(kOptimo > (k + n-i-1))$}{ \textbf{return} $0$}\EndIf
+		\If{$poda\_optimalidad$ $\land$ $(kOptimo >= (k + n-i-1))$}{ \textbf{return} $0$}\EndIf
 		
 		\State \textbf{return} $\max \{ BT(i+1, W, k, minR), BT(i+1, W+w[i], k+1, min(minR - w[i], r[i])))) \}$.
 		
@@ -147,11 +147,11 @@ Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingr
 La implementación es igual a la del algoritmo de FB pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo peor caso con complejidad $O(2^n)$ sumado a la complejidad propia de cada poda. Sin embargo tiene un mejor caso con complejidad menor cercana a lineal $O(n)$, resultante de aplicar las podas y evitar recorrer todo el árbol de recursión. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
 
 \section{Programación Dinámica} \label{sec:dp}
-La programación dinámica tiene como característica evitar calcular valores que ya fueron computados en pasos anteriores. Por la naturaleza recursiva del problema, podemos tener casos en que un sub-árbol se calcule más de una única vez generando cómputo innecesario. En este método de programación, resolvemos este problema utilizando un diccionario que contenga todos los valores calculados hasta el momento para poder reutilizarlos.
+La programación dinámica tiene como característica evitar calcular valores que ya fueron computados en pasos anteriores. Por la naturaleza recursiva del problema, podemos tener casos en que un sub-árbol se calcule más de una única vez generando cómputo innecesario. En este método de programación, resolvemos este problema utilizando un diccionario de memoización que contenga todos los valores calculados hasta el momento para poder reutilizarlos.
 
 \subsection{Implementación y correctitud}
-La implementación es top-down, recursiva y similar a la de los métodos anteriores, con el agregado de que al momento de hacer el paso recursivo se verifica que no se haya computado ya. Si no se calculó, se lo procesa y se guarda en la matriz de memoización. Si se calculó anteriormente, no se entra al paso, sino que se obtiene el valor de la matriz de memoización. Los casos base serían: cuando el peso actual aplasta un elemento de abajo o destruye el jambotubo, o cuando se llega al final de la cinta transportadora. \newline 
-La recursión es la misma que en Backtracking y Fuerza Bruta, de forma que esta versión del algoritmo también incurre en un árbol de recursión que garantiza la correctitud de la misma forma que los algorimos anteriores.
+La implementación es top-down, recursiva y similar a la de los métodos anteriores, con el agregado de que al momento de hacer el paso recursivo se verifica que los valores no se hayan computado ya. Si no se calculó, se lo procesa y se guarda en la matriz de memoización. Si se calculó anteriormente, no se entra al paso, sino que se obtiene el valor directamente de la matriz de memoización. Los casos base serían: cuando el peso actual aplasta un elemento de abajo o destruye el Jambo-tubo, o cuando se llega al final de la cinta transportadora. \newline 
+La recursión es la misma que en Backtracking y Fuerza Bruta, de forma que esta versión del algoritmo también incurre en un árbol de recursión que garantiza que se evalúen todas las posibilidades (evitando recalcular). Como cada valor de la matriz es el máximo $k$ que resuelve el problema hasta ese momento, luego basta con tomar el máximo de todos ellos.
 \paragraph{Memoización:}
 La estructura de memoización utilizada es una matriz que tiene por tamaño de fila la cantidad total de elementos de la cinta, y por tamaño de columna la resistencia del Jambo-tubo. Cada valor de la matriz corresponde con el máximo número de elementos ingresados en el Jambo-tubo en el paso $i$ con la mínima resistencia resultante de haber metido o no elementos anteriores, es decir que contiene el $k$ óptimo hasta ese momento.
 La memoización se da cuando en distintas ramas de la ejecución del algoritmo, en un paso $i$, se repite el valor de la resistencia acumulada. Un ejemplo de esto puede ser una instancia en donde el segundo elemento es igual en resistencia y peso al tercer elemento. Luego, van a haber una rama en donde no se agregue el segundo elemento y sí el tercero, y va a existir otra rama en donde se haga lo contrario. Como las ramas coinciden en resistencia acumulada va a entrar en juego la memoización evitando calcular valores ya conocidos.
@@ -163,7 +163,10 @@ La memoización se da cuando en distintas ramas de la ejecución del algoritmo, 
 
 		\If{$i = n$}{ \textbf{return} $0$}\EndIf
 		
-		\If{$m[i][W] == -1$}{$Rproxima = min(Ractual - w[i], r[i])$$m[i][W] \leftarrow max(DP(i+1, Ractual), DP(i+1, Rproxima))$}\EndIf
+		\If{$m[i][W] == -1$}
+			\State $Rproxima = min(Ractual - w[i], r[i])$
+			\State $m[i][W] \leftarrow max(DP(i+1, Ractual), 1 + DP(i+1, Rproxima))$
+		\EndIf
 		
 		\State \textbf{return} $m[i][W]$.
 		
