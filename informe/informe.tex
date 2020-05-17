@@ -404,10 +404,15 @@ Razonamos que en instancias en donde se encuentra un $k$ óptimo alto (se tienen
 % ---------------------------------------------------------------------------------------------
 
 \section{Conclusiones} \label{sec:conclusiones}
-Resolvimos el problema de los Jambo-tubos utilizando 3 tipos distintos de algoritmos que son Fuerza Bruta, Backtracking, y Programación Dinámica. Experimentamos con diversas instancias representativas que nos permiten verificar las complejidades temporales y características de cada uno, junto con sus ventajas y desventajas.
-Pudimos ver que el método de Fuerza Bruta no es viable en ninguna situación, pues tardará tiempo exponencial para cualquier instancia mientras que Backtracking y Programación Dinámica mejoran esa cota de complejidad para resolver el mismo problema. Su facilidad en la codificación nos permitió utilizarlo para verificar los resultados de los métodos más complejos.
-El método de Backtracking mejora al método de Fuerza Bruta, y vimos que ambas podas poseen puntos débiles y fuertes. Pero también vimos que al combinarlas, se tienen todos los beneficios y ninguna de las inconveniencias.
-El método de programación dinámica se comporta muy bien con $n$ grande y considerando muchos casos para la solución ($k$ alto) puesto que evita recalcular valores, y como los productos de los Jambo-tubos no serán muy pesados en una situación real, por ende la resistencia no será muy alta y la complejidad del algoritmo no crecerá mucho con $R$. Esto lo hace el método ideal para utilizar en los robots.
+Resolvimos el problema de los Jambo-tubos utilizando tres tipos distintos de algoritmos que son Fuerza Bruta, Backtracking, y Programación Dinámica. Experimentamos con diversas instancias representativas que nos permiten verificar las complejidades temporales y características de cada uno, junto con sus ventajas y desventajas.
+
+Pudimos ver que el método de Fuerza Bruta no es viable en ninguna situación, pues tardará tiempo exponencial para cualquier instancia mientras que Backtracking y Programación Dinámica mejoran esa cota de complejidad en casos promedios para resolver el mismo problema. Sin embargo facilidad en la codificación nos permitió utilizarlo para verificar los resultados de los métodos más complejos.
+
+El método de Backtracking mejora al método de Fuerza Bruta agregando podas que permiten filtrar ramas, y vimos que estas poseen puntos débiles y fuertes. Pero también vimos que al combinarlas, se tienen todos los beneficios y ninguna de las inconveniencias, dado que se complementan mutuamente.
+
+El método de Programación Dinámica se comporta muy bien con $n$ grande y considerando pocos casos para la solución ($k$ bajo) puesto que evita calcular valores innecesarios, pero pierde contra Backtracking cuando se consideran muchos elementos para la solución ($k$ alto) puesto que debe calcular más valores de la matriz.
+
+%, y como los productos de los Jambo-tubos no serán muy pesados en una situación real, por ende la resistencia no será muy alta y la complejidad del algoritmo no crecerá mucho con $R$. Esto lo hace el método ideal para utilizar en los robots.
 
 \newpage
 \nocite{*}
