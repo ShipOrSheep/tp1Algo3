@@ -181,7 +181,7 @@ La complejidad del algoritmo de programación dinámica está determinada por la
 Sabemos que la matriz tiene una dimensión de $n * R$ que es la cantidad de elementos por la resistencia total del tubo. Para inicializar la matriz insumimos $O(n * R)$ y en el algoritmo a lo sumo se resuelven $O(n * R)$ estados distintos que equivale a completar la matriz. Como las operaciones son elementales o calcular un máximo entonces cada cálculo se resuelve en $\theta(1)$. Finalmente el algoritmo tiene complejidad $O(n * R)$ en el peor caso.
 
 \section{Experimentación} \label{sec:experimentacion}
-Las experimentaciones tienen como objetivo verificar las complejidades de los diferentes algoritmos ya presentados y codificados en C++, para ello fueron ejecutados en una única PC con las siguientes características: procesador Intel Core i3-6100U a 2.3 Ghz, 3Mb L3 cache, y 6 GB de RAM.
+Las experimentaciones tienen como objetivo verificar las complejidades y comparar entre si los diferentes algoritmos ya presentados. Los algoritmos fueron codificados en su totalidad en lenguaje C++, y todos los experimentos fueron ejecutados en una única PC con las siguientes características: procesador Intel Core i3-6100U a 2.3 Ghz, 3Mb L3 cache, y 6 GB de RAM DDR4.
 
 \subsection{Instancias} \label{instancias}
 Para la experimentación realizamos experimentos sobre cinco datasets que representan tipos de instancia de diferentes características:
@@ -192,7 +192,7 @@ Para la experimentación realizamos experimentos sobre cinco datasets que repres
 	\item peor-caso-BT: entran todos los elementos en el tubo.
 	\item dinámica: instancias con $n$ y $R$ variable, y resistencias individuales aleatorias.
 \end{itemize}
-Es necesario hacer algunas aclaraciones: cuando escribamos BT-F, nos referiremos a el método de Backtracking por poda de factibilidad. Idem BT-O por poda de optimalidad. Y cuando usemos BT a secas, si no se indica lo contrario, estaremos usando ambas podas al mismo tiempo.\newline
+Es necesario hacer algunas aclaraciones: cuando escribamos BT-F, nos referimos al método de Backtracking por poda de factibilidad, y BT-O por poda de optimalidad. Y cuando usemos BT a secas, si no se indica lo contrario, estaremos usando ambas podas al mismo tiempo.\newline
 Además argumentamos que el dataset mejor-caso-BT es mejor caso sólo para BT-F, y lo mismo sucede con peor-caso-BT y BT-O. Ahora, mejor-caso-BT será un dataset de peor caso para BT-O, y peor-caso-BT será una instancia de peor caso para BT-F.
 %TODO: hay que justificar esto?
 
@@ -243,7 +243,7 @@ Para demostrar que el tipo de instancias no influye en el tiempo tardado, y que 
 %		\label{fig:fb-densidad}
 %\end{figure}
 \newline
-Podemos ver en la figura \ref{fig:fb-densidad} que los gráficos se solapan. Esto indica que ambos presentan comportamiento exponencial, lo cual explica que el algoritmo de fuerza bruta no discrimina entre tipos de instancias, sino que solo depende de la cantidad total de elementos que vienen por la cinta.
+Podemos ver en la figura \ref{fig:fb-densidad} que los gráficos se solapan. Esto indica que ambos presentan comportamiento exponencial, lo cual explica que el algoritmo de Fuerza Bruta no discrimina entre tipos de instancias, sino que solo depende de la cantidad total de elementos que vienen por la cinta.
 \newline
 \begin{figure}[h!]
 	\centering
