@@ -260,7 +260,7 @@ coeficiente de correlación de Pearson\cite{ref:pearson} de $0.999975$ validando
 % ---------------------------------------------------------------------------------------------
 \subsection{Experimento 2: Backtracking}
 \subsubsection{Análisis de Complejidad}
-Nuestra hipótesis es que el método de backtracking tiene complejidad de peor caso exponencial. Utilizando el dataset de peor caso para la poda de factibilidad, graficamos las instancias de ejecución del algoritmo contra una funcion exponencial.
+Nuestra hipótesis es que el método de Backtracking tiene complejidad de peor caso exponencial. Utilizando el dataset de peor caso para la poda de factibilidad, graficamos las instancias de ejecución del algoritmo contra una función exponencial.
 \newline
 \begin{figure}[h!]
 \begin{subfigure}{0.4\linewidth}
@@ -279,19 +279,19 @@ Nuestra hipótesis es que el método de backtracking tiene complejidad de peor c
 \newline
 Viendo el gráfico \ref{fig:bt-complejidad-pero-caso}, se puede notar un solapamiento entre BT-F y la función exponencial, demostrando que efectivamente en el peor caso la complejidad es la planteada.
 Del gráfico \ref{fig:bt-correlacion-peor-caso}, obtenemos que el coeficiente de Pearson es 0.99966, suficiente como para decir que es claramente exponencial la complejidad en peor caso.
-Otra hipótesis que tenemos, es que la complejidad en mejor caso de la poda por factibilidad es lineal, pues si ningún elemento puede ser metido en el jambotubo sin romperlo, luego sólo recorro la cinta una única vez. Utilizando un dataset de mejor caso para la poda mencionada, la graficamos contra una función lineal.
+Otra hipótesis que tenemos, es que la complejidad en mejor caso de la poda por factibilidad es lineal, pues si ningún elemento puede ser metido en el Jambo-tubo sin romperlo, luego sólo recorro la cinta una única vez. Utilizando un dataset de mejor caso para la poda mencionada, la graficamos contra una función lineal.
 \newline
 \begin{figure}[h!]
 \begin{subfigure}{0.4\linewidth}
 	\centering
 		\includegraphics[scale=0.30]{img/bt-complejidad-mejor-caso.jpg}
-		\caption{Análisis de complejidad backtracking BT-F mejor caso}
+		\caption{Análisis de complejidad BT-F mejor caso}
 		\label{fig:bt-complejidad-mejor-caso}
 \end{subfigure}
 \begin{subfigure}{0.4\linewidth}
 	\centering
 		\includegraphics[scale=0.30]{img/bt-correlacion-mejor-caso.jpg}
-		\caption{Análisis de correlación backtracking BT-F mejor caso}
+		\caption{Análisis de correlación BT-F mejor caso}
 		\label{fig:bt-correlacion-mejor-caso}
 \end{subfigure}
 \end{figure}
