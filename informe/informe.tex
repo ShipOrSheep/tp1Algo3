@@ -301,6 +301,8 @@ Otra hipótesis que tenemos, es que la complejidad en mejor caso de la poda por 
 \newline
 Como podemos apreciar en el gráfico \ref{fig:bt-complejidad-mejor-caso}, las instancias graficadas contra la función lineal toman su forma. Lo respaldamos calculando la correlación.
 La correlación de Pearson en la figura \ref{fig:bt-correlacion-mejor-caso} da el valor 0.96517, respaldando nuestra hipótesis de que el mejor caso es de carácter lineal.
+\newline
+\newline
 %-----------------------------------------------------
 \subsubsection{Análisis de Podas}
 \begin{figure}[h!]
@@ -406,7 +408,7 @@ Razonamos que en instancias en donde se encuentra un $k$ óptimo alto (se tienen
 \section{Conclusiones} \label{sec:conclusiones}
 Resolvimos el problema de los Jambo-tubos utilizando tres tipos distintos de algoritmos que son Fuerza Bruta, Backtracking, y Programación Dinámica. Experimentamos con diversas instancias representativas que nos permiten verificar las complejidades temporales y características de cada uno, junto con sus ventajas y desventajas.
 
-Pudimos ver que el método de Fuerza Bruta no es viable en ninguna situación, pues tardará tiempo exponencial para cualquier instancia mientras que Backtracking y Programación Dinámica mejoran esa cota de complejidad en casos promedios para resolver el mismo problema. Sin embargo facilidad en la codificación nos permitió utilizarlo para verificar los resultados de los métodos más complejos.
+Pudimos ver que el método de Fuerza Bruta no es viable en ninguna situación, pues tardará tiempo exponencial para cualquier instancia mientras que Backtracking y Programación Dinámica mejoran esa cota de complejidad en casos promedios para resolver el mismo problema. Sin embargo su facilidad de programación nos permitió utilizarlo para verificar los resultados de los métodos más complejos.
 
 El método de Backtracking mejora al método de Fuerza Bruta agregando podas que permiten filtrar ramas, y vimos que estas poseen puntos débiles y fuertes. Pero también vimos que al combinarlas, se tienen todos los beneficios y ninguna de las inconveniencias, dado que se complementan mutuamente.
 
