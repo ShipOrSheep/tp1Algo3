@@ -61,17 +61,19 @@
 \setcounter{page}{1}
 
 \section{Introducción} \label{sec:introduccion}
-En el presente trabajo práctico se pide realizar la programación de robots pertenecientes a la empresa Jambo, con el fin de optimizar una de las diversas operaciones en sus locales. Particularmente, se pide programar un robot que realizará el servicio de empaque en Jambo-tubos. El servicio consiste en un robot que decidirá cuales de los productos que le llegan por una cinta transportadora serán empacados en un tubo, con el objetivo de lograr apilar la mayor cantidad de productos sin que se rompan. Cada producto llega por la cinta en un orden determinado, y se conoce su peso y resistencia individual, por lo que el robot debe manejar esta información para no romper el tubo ni los productos apilados dentro del mismo por el propio peso de cada uno. \cite{ref:enunciado}
+En el presente trabajo práctico se pide realizar la programación de robots pertenecientes a la empresa Jambo, con el fin de optimizar una de las diversas operaciones en sus locales. Particularmente, se pide programar un robot que realizará el servicio de empaque en Jambo-tubos. El servicio consiste en un robot que decidirá cuales de los productos que le llegan por una cinta transportadora serán empacados en un tubo, con el objetivo de lograr apilar la mayor cantidad de productos sin que se rompan. Cada producto llega por la cinta en un orden determinado, y se conoce su peso y resistencia individual, por lo que el robot debe manejar esta información para no romper el tubo ni los productos apilados dentro del mismo por el propio peso de cada uno \cite{ref:enunciado}. 
+
+Por ejemplo, supongamos que tenemos 3 elementos que se transportan en la cinta en el orden presentado, tienen pesos individuales ${1,2,3}$ y resistencias individuales ${3,2,1}$. La resistencia del Jambo-tubo será de $4$, la solución es 2 y los conjuntos que las representan son los elementos ${1,2}$ o ${2,3}$, en ambos casos el peso acumulado no supera los $4$ del Jambo-tubos, y ninguno de los elementos se rompe al agregar el siguiente.
 
 En el informe desarrollamos tres técnicas de programación que nos permiten abordar el problema de los Jambo-tubos: Fuerza Bruta(FB), Backtracking(BT), y por último Programación Dinámica(PD).
 
 \section{Fuerza Bruta} \label{sec:fuerza_bruta}
-El algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no. En nuestro caso, se tienen en cuenta todas las posibles formas de ingresar los productos en el tubo, y luego se determina cuál es la cantidad máxima de productos que se pueden ingresar sin romper ninguno de los productos apilados. Podemos observar que en todos los casos se revisan la totalidad de los productos ingresados por lo que no podemos distinguir mejor y peor caso.
+El algoritmo de Fuerza Bruta recorre todas las posibles soluciones sin importar que sean factibles o no. En nuestro caso, se tienen en cuenta todas las posibles formas de ingresar los productos en el tubo, y luego se determina cuál es la cantidad máxima de productos que se pueden ingresar sin romper ninguno de los productos apilados. Podemos observar que en todos los casos se revisan la totalidad del conjunto de soluciones para después determinar la solución óptima por lo que no podemos distinguir mejor y peor caso.
 
 \subsection{Implementación y correctitud}
-El algoritmo implementado es recursivo y en cada paso se revisan dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Esto genera todo el árbol de recursión con todos los casos posibles, o sea todas las ramas completas siendo sus hojas las posibles soluciones, esto nos garantiza la correctitud del algoritmo. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo sin romper el tubo ni los productos apilados.
+El algoritmo implementado es recursivo y en cada paso se revisan dos posibilidades sobre el producto actual en cinta, se agrega o no al tubo. Se genera el árbol de recursión con todos los casos posibles agregando un elemento por vez, o sea se desarrollan todas las ramas completas siendo sus hojas las posibles soluciones. Finalmente teniendo todas las posibles soluciones basta con seleccionar la que cumple que maximiza la cantidad de productos ingresados al tubo sin romper el tubo ni los productos apilados, esto nos garantiza la correctitud del algoritmo.
 
-Para saber si se rompe algún producto dentro del Jambo-tubo guardamos en una variable la mínima resistencia restante entre los productos $minR$ en el pseudo-código, para ello calculamos en cada paso el mínimo entre el nuevo producto agregado y la diferencia entre la resistencia mínima restante y el peso del nuevo producto. De esta forma siempre estamos verificando que el producto de menor resistencia restante no se rompa, asegurando el estado del resto de los productos de mayor resistencia. Si se rompe el elemento de menor resistencia restante luego ya sabemos que ese caso no es solución.
+Para saber si se rompe algún producto dentro del Jambo-tubo guardamos en la variable $minR$ la mínima resistencia restante entre los productos \ref{alg:fuerza_bruta}, para ello calculamos en cada paso el mínimo entre el nuevo producto agregado y la diferencia entre la resistencia mínima restante y el peso del nuevo producto. De esta forma siempre estamos verificando que el producto de menor resistencia restante no se rompa, asegurando el estado del resto de los productos de mayor resistencia. Si se rompe el elemento de menor resistencia restante luego ya sabemos que ese caso no es solución. Al tener en cuenta en $minR$ la resistencia del Jambo-tubo estamos cubriendo también el caso en que este se rompe.
 
 Los parámetros que recibe la función \ref{alg:fuerza_bruta} son:
 \begin{itemize}
@@ -101,14 +103,14 @@ Los parámetros que recibe la función \ref{alg:fuerza_bruta} son:
 \end{algorithm} 	
 
 \subsection{Complejidad}
-La complejidad del algoritmo es $\theta(2^n)$ para todos los casos, pues en cada paso recursivo genera dos llamados la misma función, una para el caso en que se agrega el producto al tubo, y otra para el caso en que no. El árbol de recursión completo cuenta con $n + 1$ niveles contando la raíz, y siendo cada hoja una solución posible. La cantidad de nodos nos indica la cantidad de llamados recursivos realizados que son exactamente $2^n$.
+La complejidad del algoritmo es $\theta(2^n)$ para todos los casos, pues en cada paso recursivo genera dos llamados a la misma función, una para el caso en que se agrega el producto al tubo, y otra para el caso en que no. El árbol de recursión completo cuenta con $n+1$ niveles contando la raíz, y siendo cada hoja una solución posible. La cantidad de nodos nos indica la cantidad de llamados recursivos realizados que son exactamente $2^n$.
 El resto de las operaciones elementales y comparaciones se realizan en $\theta(1)$.
 
 \section{Backtracking} \label{sec:backtracking}
-Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una poda que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que esa rama no lleve a una solución optima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre el cual se aplica la poda llevará a una solución esperada.
+Similar al algoritmo de fuerza bruta, intenta recorrer el árbol de recursión con todas las posibles combinaciones pero evitando revisar algunas ramas según una implementación de podas que puede ser por factibilidad en caso de que esa rama no lleve a una solución factible, o por optimalidad en caso de que no lleve a una solución óptima. Por la propiedad dominó podemos asegurarnos que ninguna solución del sub-árbol generado por el nodo sobre el cual se aplica la poda llevará a una solución válida u óptima.
 
 \subsection{Implementación y correctitud}
-En este caso la correctitud es similar a la de FB ya que el algoritmo BT \ref{alg:backtracking} sólo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros sobre el algoritmo FB. Se agrega un nuevo parámetro $kOptimo$ respecto a la versión de FB que mantiene el k que maximiza la cantidad de productos sin romper el tubo ni los elementos apilados, y se elimina el parámetro $aplastados$ pues esa funcionalidad se implementa en la poda de factibilidad.
+En este caso la correctitud es similar a la de FB ya que el algoritmo BT \ref{alg:backtracking} sólo agrega sobre este último podas que finalizan la búsqueda de soluciones por la rama que está siendo evaluada. Estas podas se implementan como filtros sobre el algoritmo FB. Se agrega un nueva variable global $kOptimo$ respecto a la versión de FB que mantiene el $k$ que maximiza la cantidad de productos sin romper el tubo ni los elementos apilados, y se elimina el parámetro $aplastados$ pues esa funcionalidad se implementa en la poda de factibilidad.
 
 \paragraph{Poda por factibilidad}
 Implementada sobre la idea de evitar continuar con ramas en que la suma de los pesos de los productos en el Jambo-tubo superen la resistencia total del mismo, o rompan alguno de los productos dentro del tubo.
@@ -118,17 +120,22 @@ Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingr
 
 \begin{algorithm}
 	\begin{algorithmic}[1]
-		\Function{$BT$}{$i$, $W$, $k$, $minR$, $kOptimo$}
+		\Function{$BT$}{$i$, $W$, $k$, $minR$}
 
-		\If{$i = n$}
-			\IfThenElse{$W <= R$ $\land$ $minR >= 0$}{\textbf{return} $kOptimo$}{\textbf{return} $0$}
+		\If {$i = n$}
+			\If	{$W <= R$ $\land$ $minR >= 0$}
+				\State $kOptimo \leftarrow max(kOptimo, k)$
+				\State \textbf{return} $kOptimo$
+			\Else	
+				\State \textbf{return} $0$
+			\EndIf
 		\EndIf
 		
 		\If{$poda\_factibilidad$ $\land$ $(W > R$ $||$ $minR < 0)$}{ \textbf{return} $0$}\EndIf
 		
 		\If{$poda\_optimalidad$ $\land$ $(kOptimo > (k + n-i-1))$}{ \textbf{return} $0$}\EndIf
 		
-		\State \textbf{return} $\max \{ BT(i+1, W, k, minR, kOptimo), BT(i+1, W+w[i], k+1, min(minR - w[i], r[i]), max(kOptimo, k+1))) \}$.
+		\State \textbf{return} $\max \{ BT(i+1, W, k, minR), BT(i+1, W+w[i], k+1, min(minR - w[i], r[i])))) \}$.
 		
 		\EndFunction
 	\end{algorithmic}
@@ -137,18 +144,17 @@ Implementada sobre la idea de evitar continuar por ramas en que sabemos que ingr
 \end{algorithm}
 
 \subsection{Complejidad}
-La implementación es igual a la del algoritmo de FB pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo peor caso con complejidad $O(2^n)$ sumado a la complejidad propia de cada poda. Sin embargo tiene un mejor caso con complejidad menor resultante de aplicar las podas y evitar recorrer todo el árbol de recursión. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
-%TODO: Falta ver poda de mejor caso
+La implementación es igual a la del algoritmo de FB pero en cada paso se verifican las dos condiciones para las podas, por lo que sigue teniendo peor caso con complejidad $O(2^n)$ sumado a la complejidad propia de cada poda. Sin embargo tiene un mejor caso con complejidad menor cercana a lineal $O(n)$, resultante de aplicar las podas y evitar recorrer todo el árbol de recursión. Teniendo podas que se resuelven con operaciones elementales y comparaciones en $\theta(1)$, no se agrega complejidad adicional.
 
 \section{Programación Dinámica} \label{sec:dp}
-La programación dinámica tiene como característica evitar calcular valores que ya fueron computados en pasos siguientes. Por la naturaleza recursiva del problema, podemos tener casos en que un sub-árbol se calcule más de una única vez generando cómputo innecesario. En este método de programación, resolvemos este problema utilizando un diccionario que contenga todos los valores calculados hasta el momento para poder reutilizarlos.
+La programación dinámica tiene como característica evitar calcular valores que ya fueron computados en pasos anteriores. Por la naturaleza recursiva del problema, podemos tener casos en que un sub-árbol se calcule más de una única vez generando cómputo innecesario. En este método de programación, resolvemos este problema utilizando un diccionario que contenga todos los valores calculados hasta el momento para poder reutilizarlos.
 
 \subsection{Implementación y correctitud}
-La implementación es recursiva y similar a la de los métodos anteriores, con el agregado de que al momento de hacer el paso recursivo se verifica que no se haya computado ya. Si se calculó, no se entra al paso, sino que se obtiene el valor a través de una matriz de memoización. Los casos base serían: cuando el peso actual aplasta un elemento de abajo o destruye el jambotubo, o cuando se llega al final de la cinta transportadora. \newline 
-La recursión es la misma que en backtracking y fuerza bruta, de forma que esta versión del algoritmo también incurre en un árbol de recursión.
+La implementación es top-down, recursiva y similar a la de los métodos anteriores, con el agregado de que al momento de hacer el paso recursivo se verifica que no se haya computado ya. Si no se calculó, se lo procesa y se guarda en la matriz de memoización. Si se calculó anteriormente, no se entra al paso, sino que se obtiene el valor de la matriz de memoización. Los casos base serían: cuando el peso actual aplasta un elemento de abajo o destruye el jambotubo, o cuando se llega al final de la cinta transportadora. \newline 
+La recursión es la misma que en Backtracking y Fuerza Bruta, de forma que esta versión del algoritmo también incurre en un árbol de recursión que garantiza la correctitud de la misma forma que los algorimos anteriores.
 \paragraph{Memoización:}
-La estructura de memoización utilizada es una matriz que tiene por tamaño de fila la cantidad total de elementos de la cinta, y por tamaño de columna la resistencia del jambotubo. Cada valor de la matriz corresponde con el máximo número de elementos ingresados en el Jambo-tubo en el paso $i$ con la mínima resistencia resultante de haber metido o no elementos anteriores.
-La memoización se da cuando en distintas ramas de la ejecución del algoritmo, en un paso $i$, se repite el valor de la resistencia acumulada. Un ejemplo de esto puede ser una instancia en donde el segundo elemento es igual en resistencia y peso al tercer elemento. Luego, van a haber una rama en donde no se agregue el segundo elemento y sí el tercero, y va a existir otra rama en donde se haga lo contrario. Como las ramas coinciden en Resistencia acumulada va a entrar en juego la memoización.
+La estructura de memoización utilizada es una matriz que tiene por tamaño de fila la cantidad total de elementos de la cinta, y por tamaño de columna la resistencia del Jambo-tubo. Cada valor de la matriz corresponde con el máximo número de elementos ingresados en el Jambo-tubo en el paso $i$ con la mínima resistencia resultante de haber metido o no elementos anteriores, es decir que contiene el $k$ óptimo hasta ese momento.
+La memoización se da cuando en distintas ramas de la ejecución del algoritmo, en un paso $i$, se repite el valor de la resistencia acumulada. Un ejemplo de esto puede ser una instancia en donde el segundo elemento es igual en resistencia y peso al tercer elemento. Luego, van a haber una rama en donde no se agregue el segundo elemento y sí el tercero, y va a existir otra rama en donde se haga lo contrario. Como las ramas coinciden en resistencia acumulada va a entrar en juego la memoización evitando calcular valores ya conocidos.
 \begin{algorithm}
 	\begin{algorithmic}[1]
 		\Function{$PD$}{$i$, $Ractual$}
@@ -181,10 +187,12 @@ Para la experimentación realizamos experimentos sobre cinco datasets que repres
 	\item densidad-baja: devuelven k bajo, pocos elementos son considerados para ser ingresados en el tubo.
 	\item mejor-caso-BT: no entra ningún elemento en el tubo.
 	\item peor-caso-BT: entran todos los elementos en el tubo.
-	\item dinamica: instancias con $n$ y $R$ variable, y resistencias individuales aleatorias.
+	\item dinámica: instancias con $n$ y $R$ variable, y resistencias individuales aleatorias.
 \end{itemize}
-Es necesario hacer algunas aclaraciones: cuando escribamos BT-F, nos referiremos a el método de backtracking por poda de factibilidad. Idem BT-O por poda de factibilidad. Y cuando usemos BT a secas, si no se indica lo contrario, estaremos usando ambas podas al mismo tiempo.\newline
+Es necesario hacer algunas aclaraciones: cuando escribamos BT-F, nos referiremos a el método de Backtracking por poda de factibilidad. Idem BT-O por poda de optimalidad. Y cuando usemos BT a secas, si no se indica lo contrario, estaremos usando ambas podas al mismo tiempo.\newline
 Además argumentamos que el dataset mejor-caso-BT es mejor caso sólo para BT-F, y lo mismo sucede con peor-caso-BT y BT-O. Ahora, mejor-caso-BT será un dataset de peor caso para BT-O, y peor-caso-BT será una instancia de peor caso para BT-F.
+%TODO: hay que justificar esto?
+
 % Comentarios experimentacion:
 % Podemos mencionar que si un paso recursivo tardara 1 nanosegundo, un tubo de 101 elementos tardaria [INSERTAR muchas horas]
 % Eso lo comparamos a n = 800 * R = 1000, y si el paso recursivo tardara 1 nanosegundo, tardaria en tiempo: [INSERTAR menos horas]
